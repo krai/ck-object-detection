@@ -62,7 +62,7 @@ def ck_postprocess(i):
   if accuracy_mode:
     deps = i['deps']
     python_bin = deps['python']['dict']['env']['CK_PYTHON_BIN']
-    accuracy_script = os.path.join( deps['mlperf-inference-src']['dict']['env']['CK_ENV_MLPERF_INFERENCE_V05'],
+    accuracy_script = os.path.join( deps['mlperf-inference-src']['dict']['env']['CK_ENV_MLPERF_INFERENCE_VISION'],
                                     'classification_and_detection', 'tools', 'accuracy-coco.py' )
     coco_dir = deps['dataset']['dict']['env']['CK_ENV_DATASET_COCO']
 
