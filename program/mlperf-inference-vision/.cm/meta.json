@@ -111,7 +111,7 @@
       "local": "yes",
       "name": "TensorFlow Object Detection model",
       "sort": 30,
-      "tags": "model,tf,object-detection"
+      "tags": "model,tf,object-detection,tf1-zoo"
     }
   },
   "run_vars": {
