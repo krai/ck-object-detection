@@ -2,11 +2,12 @@
   "data_uid": "d5b5c4043b0c5741", 
   "data_name": "ck-object-detection", 
   "dict": {
-    "url": "https://github.com/ctuning/ck-object-detection", 
+    "url": "https://github.com/krai/ck-object-detection", 
     "shared": "git",
     "repo_deps": [
       {
-        "repo_uoa": "ck-mlperf"
+        "repo_uoa": "ck-mlperf",
+        "repo_url": "https://github.com/krai/ck-mlperf"
       }
     ]
   }, 

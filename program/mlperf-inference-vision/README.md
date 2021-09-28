@@ -53,12 +53,42 @@ $ ck show env --tags=dataset,coco
 ```
 
 ## Running
-
+For `ck-mlperf-tf-object-detection`
 ```bash
 $ ck run program:ck-mlperf-tf-object-detection
 ```
 
-### Program parameters
+For `mlperf-inference-vision`, to run the program in accuracy mode:
+```
+ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --dep_add_tags.weights=yolo-v3 \
+  --dep_add_tags.lib-tensorflow=vpip \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --tags=mlperf,open,object-detection,yolo-v3-coco,singlestream,accuracy \
+  --skip_print_timers
+```
+
+To run the program in performance mode, remove the `env.CK_LOADGEN_MODE` tag and specify the `QPS` with the `env.CK_LOADGEN_EXTRA_PARAMS` tag
+```
+ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --dep_add_tags.weights=yolo-v3 \
+  --dep_add_tags.lib-tensorflow=vpip \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --tags=mlperf,open,object-detection,yolo-v3-coco,singlestream,accuracy \
+  --skip_print_timers \
+  --env.CK_LOADGEN_EXTRA_PARAMS="--qps 30"
+```
+
+### Program parameters for ck-mlperf-tf-object-detection
 
 #### `CK_BATCH_COUNT`
 
@@ -167,5 +197,3 @@ Defaults: `1024` `24576` `24576`
 mlperf variable with the max latency in the 99pct tile
 
 Default: `0.1`
-
-
