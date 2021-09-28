@@ -48,7 +48,7 @@
       "local": "yes",
       "name": "MLPerf Inference source",
       "sort": 1,
-      "tags": "mlperf,inference,source,dividiti.vision_with_ck"
+      "tags": "mlperf,inference,source,krai.vision_with_ck"
     },
     "loadgen-config-file": {
       "force_target_as_host": "yes",
