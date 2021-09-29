@@ -288,6 +288,26 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
+## 5) Whether to use `optimize_for_inference` lib to optimise the graph
+Default option is `False`, can be explicitly configured with `--env.CK_OPTIMIZE_GRAPH`
+
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_OPTIMIZE_GRAPH='True' \
+  \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+
 <!-- ### Program parameters for ck-mlperf-tf-object-detection
 
 #### `CK_BATCH_COUNT`
