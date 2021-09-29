@@ -1,6 +1,54 @@
 # TensorFlow object-detection program
 
-## Pre-requisites
+# Build the environment:
+
+## 1) Docker
+Build the docker image and container with the build file from `ck-mlperf/docker/mlperf-inference-vision-with-ck.tensorrt/build.sh`. Also, set the image name:
+```
+export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.08-py3_tf-2.6.0"
+```
+
+### a) Just run the docker AND execute the intended ck command
+Following the format below:
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision ... "
+```
+Quick Example:
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+
+### b) To run custom command and edit the environment
+use the following to create a dummy container `ck`
+```
+docker run -td --runtime=nvidia --entrypoint /bin/bash --name ck [IMAGE ID]
+```
+Getting into the container
+```
+docker exec -it ck /bin/bash
+```
+Stopping the container
+```
+docker stop ck
+```
+Remove the container
+```
+docker rm ck
+```
+
+## 2) Locally
 
 ### Repositories
 
@@ -52,43 +100,195 @@ where `dataset-env-uoa` is one of the env identifiers returned by:
 $ ck show env --tags=dataset,coco
 ```
 
-## Running
-For `ck-mlperf-tf-object-detection`
-```bash
-$ ck run program:ck-mlperf-tf-object-detection
-```
+---
+---
 
-For `mlperf-inference-vision`, to run the program in accuracy mode:
+# Running 
+## 0) General Form:
 ```
-ck run program:mlperf-inference-vision --cmd_key=direct \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct 
+  # Model_Specifications
+  --dep_add_tags.weights=[MODEL_NAME] \
+  --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE] \
+  --env.CK_METRIC_TYPE=[DATA_TYPE] \
+
+  # Backend_and_Scenario_Specifications
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip \
+  --env.CK_LOADGEN_SCENARIO=Offline \
+
+  # Mode_Specifications
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --dep_add_tags.weights=yolo-v3 \
-  --dep_add_tags.lib-tensorflow=vpip \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
-  --tags=mlperf,open,object-detection,yolo-v3-coco,singlestream,accuracy \
-  --skip_print_timers
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+
+  # Specify CPU or GPU
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  
+  # Others
+  --skip_print_timers"
 ```
 
-To run the program in performance mode, remove the `env.CK_LOADGEN_MODE` tag and specify the `QPS` with the `env.CK_LOADGEN_EXTRA_PARAMS` tag
+
+## 1) With Different Model
+Change the `--dep_add_tags.weights`, `--env.CK_LOADGEN_REF_PROFILE`, `--env.CK_METRIC_TYPE` as listed in the table to run different model
 ```
-ck run program:mlperf-inference-vision --cmd_key=direct \
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \ 
+  --dep_add_tags.weights=[MODEL_NAME] \
+  --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE] \
+  --env.CK_METRIC_TYPE=[DATA_TYPE] \
+  \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip \
+  --env.CK_LOADGEN_SCENARIO=Offline \
+  --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --skip_print_timers \
+  --env.CUDA_VISIBLE_DEVICES=-1"
+```
+| MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE |
+| --- | --- | --- |
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` |
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` |
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` |
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`rcnn-nas-coco`|`default_tf_object_det_zoo`| `COCO` |
+|`ssdlite-mobilenet-v2-kitti`| `default_tf_object_det_zoo`| `KITTI` |
+|`rcnn-nas-lowproposals-kitti`|`default_tf_object_det_zoo`| `KITTI` |
+|`yolo-v3-coco`|`tf_yolo`| `COCO` |
+
+
+
+## 2) With Different Mode:
+Mode could be changed by the tags `--env.CK_LOADGEN_MODE`. (When specified is accuracy, when not specified is performance.) In accuracy and performance mode, we can specify the count for accuracy mode and the qps for performance mode with the tag `--env.CK_LOADGEN_EXTRA_PARAMS`
+
+| Accuracy Mode | Performance Mode |
+| --- | ---|
+|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'`|
+
+
+Accuracy Mode Example:
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+
+Performance Mode Example:
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--qps 30' \
+  \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+
+## 3) With Different Device:
+| CPU | GPU |
+| --- | ---|
+|`--env.CUDA_VISIBLE_DEVICES=-1` | Don't need to specify |
+
+CPU Example
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --skip_print_timers"
+```
+
+GPU Example
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --skip_print_timers"
+```
+
+## 3) With Different Scenario:
+
+Change the tag `--env.CK_LOADGEN_SCENARIO` to specify it
+
+|SCENARIO|
+|---|
+| `SingleStrem`, `MultiStream`, `Server`, `Offline` |
+
+```
+time docker run -it --rm ${CK_IMAGE} 
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_SCENARIO=[SCENARIO] \
+  \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=tensorflow \
+  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+
+
+## 4) With Different Backend
+(to be confirm) Avalibale backend: tensorflow, tflite, onnxruntime, pytorch, pytorch-native, tensorflowRT
+
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_BACKEND=[BACKEND] \
+  --dep_add_tags.lib-tensorflow=vpip\
+  \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=yolo-v3-coco \
+  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --dep_add_tags.weights=yolo-v3 \
-  --dep_add_tags.lib-tensorflow=vpip \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
-  --tags=mlperf,open,object-detection,yolo-v3-coco,singlestream,accuracy \
-  --skip_print_timers \
-  --env.CK_LOADGEN_EXTRA_PARAMS="--qps 30"
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
 ```
 
-### Program parameters for ck-mlperf-tf-object-detection
+<!-- ### Program parameters for ck-mlperf-tf-object-detection
 
 #### `CK_BATCH_COUNT`
 
@@ -196,4 +396,4 @@ Defaults: `1024` `24576` `24576`
 
 mlperf variable with the max latency in the 99pct tile
 
-Default: `0.1`
+Default: `0.1` -->
