@@ -113,9 +113,11 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE] \
   --env.CK_METRIC_TYPE=[DATA_TYPE] \
 
-  # Backend_and_Scenario_Specifications
+  # Backend_Specifications
   --env.CK_LOADGEN_BACKEND=tensorflow \
   --dep_add_tags.lib-tensorflow=vpip \
+
+  # Scenario_Specifications
   --env.CK_LOADGEN_SCENARIO=Offline \
 
   # Mode_Specifications
@@ -159,10 +161,10 @@ time docker run -it --rm ${CK_IMAGE} \
 |`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` |
 |`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` |
 |`rcnn-nas-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`ssdlite-mobilenet-v2-kitti`| `default_tf_object_det_zoo`| `KITTI` |
-|`rcnn-nas-lowproposals-kitti`|`default_tf_object_det_zoo`| `KITTI` |
 |`yolo-v3-coco`|`tf_yolo`| `COCO` |
 
+<!-- |`ssdlite-mobilenet-v2-kitti`| `default_tf_object_det_zoo`| `KITTI` |
+|`rcnn-nas-lowproposals-kitti`|`default_tf_object_det_zoo`| `KITTI` | -->
 
 
 ## 2) With Different Mode:
