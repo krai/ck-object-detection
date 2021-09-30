@@ -172,7 +172,7 @@ Mode could be changed by the tags `--env.CK_LOADGEN_MODE`. (When specified is ac
 
 | Accuracy Mode | Performance Mode |
 | --- | ---|
-|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'`|
+|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
 
 
 Accuracy Mode Example:
@@ -197,6 +197,7 @@ Performance Mode Example:
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
   --env.CK_LOADGEN_EXTRA_PARAMS='--qps 30' \
+  --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \

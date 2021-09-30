@@ -7,7 +7,7 @@ time docker run -it --rm ${CK_IMAGE} \
     --model=yolo-v3-coco \
     --library=tensorflow-v2.6.0-cpu"
 ```
-What it actually represent in ck environment:
+What it actually represents in ck environment:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -47,13 +47,14 @@ It will affect the following flags in the ck environment:
 `mode` for specifying mode and `mode-param` for specifying count or qps. 
 It will affect the following flags in the ck environment:
 ```
---env.CK_LOADGEN_MODE='--accuracy'
---env.CK_LOADGEN_EXTRA_PARAMS='--count 50'
+--env.CK_LOADGEN_MODE
+--env.CK_LOADGEN_EXTRA_PARAMS
+--env.CK_OPTIMIZE_GRAPH
 ```
 
 | Accuracy Mode | Performance Mode |
 | --- | ---|
-|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'`|
+|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
 
 ---
 ---
