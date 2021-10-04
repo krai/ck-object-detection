@@ -70,17 +70,20 @@ It will affect the following flags in the ck environment:
 
 | MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE | FRAMEWORK |
 | --- | --- | --- | --- |
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow` |
 |`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd_mobilenet_v1_quantized_coco`|NA|NA|NA|
 |`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow` |
 |`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-nas-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
+
+Comments: Added `ssd_mobilenet_v1_coco` and removed `rcnn-nas-coco`. Will add `ssd_mobilenet_v1_quantized_coco` later.
 
 ---
 ---

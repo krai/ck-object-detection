@@ -54,76 +54,6 @@
     "module_uoa": "script"
   },
   "variations": {
-    "rcnn-inception-resnet-v2-lowproposals-coco": {
-      "extra_env": {
-        "MODEL_DATASET_TYPE": "coco",
-        "MODEL_LABELMAP_NAME": "COCO",
-        "MODEL_LABELMAP_FILE": "mscoco_label_map.pbtxt",
-        "MODEL_LABELMAP_EXTRA_TAG": "",
-        "MODEL_MODEL_ID": "faster_rcnn_inception_resnet_v2_lowproposals_coco",
-        "MODEL_MODEL_NAME": "Faster-RCNN-Inception-ResNet-v2 lowproposals",
-        "MODEL_DEFAULT_WIDTH": "600",
-        "MODEL_DEFAULT_HEIGHT": "1024",
-        "MODEL_PACKAGE_NAME": "faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco_2018_01_28.tar.gz",
-        "MODEL_PACKAGE_NAME1": "faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco_2018_01_28",
-        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection"
-      },
-      "extra_tags": [
-        "rcnn",
-        "non-quantized",
-        "resnet-v2",
-        "inception",
-        "inception-resnet-v2",
-        "rcnn-inception-resnet-v2",
-        "lowproposals",
-        "vcoco"
-      ]
-    },
-    "rcnn-inception-v2-coco": {
-      "extra_env": {
-        "MODEL_DATASET_TYPE": "coco",
-        "MODEL_LABELMAP_NAME": "COCO",
-        "MODEL_LABELMAP_FILE": "mscoco_label_map.pbtxt",
-        "MODEL_LABELMAP_EXTRA_TAG": "",
-        "MODEL_MODEL_ID": "faster_rcnn_inception_v2_coco",
-        "MODEL_MODEL_NAME": "Faster-RCNN Inception-v2",
-        "MODEL_DEFAULT_WIDTH": "1024",
-        "MODEL_DEFAULT_HEIGHT": "600",
-        "MODEL_PACKAGE_NAME": "faster_rcnn_inception_v2_coco_2018_01_28.tar.gz",
-        "MODEL_PACKAGE_NAME1": "faster_rcnn_inception_v2_coco_2018_01_28",
-        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection"
-      },
-      "extra_tags": [
-        "rcnn",
-        "non-quantized",
-        "inception-v2",
-        "rcnn-inception-v2",
-        "vcoco"
-      ]
-    },
-    "rcnn-nas-coco": {
-      "extra_env": {
-        "MODEL_DATASET_TYPE": "coco",
-        "MODEL_LABELMAP_NAME": "COCO",
-        "MODEL_LABELMAP_FILE": "mscoco_label_map.pbtxt",
-        "MODEL_LABELMAP_EXTRA_TAG": "",
-        "MODEL_MODEL_ID": "faster_rcnn_nas_coco",
-        "MODEL_MODEL_NAME": "Faster-RCNN NAS COCO",
-        "MODEL_DEFAULT_WIDTH": "1200",
-        "MODEL_DEFAULT_HEIGHT": "1200",
-        "MODEL_PACKAGE_NAME": "faster_rcnn_nas_coco_2018_01_28.tar.gz",
-        "MODEL_PACKAGE_NAME1": "faster_rcnn_nas_coco_2018_01_28",
-        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection"
-      },
-      "extra_tags": [
-        "rcnn",
-        "non-quantized",
-        "rcnn-nas",
-        "nas",
-        "non-lowproposals",
-        "vcoco"
-      ]
-    },
     "rcnn-nas-lowproposals-coco": {
       "extra_env": {
         "MODEL_DATASET_TYPE": "coco",
@@ -146,30 +76,6 @@
         "lowproposals",
         "non-quantized",
         "vcoco"
-      ]
-    },
-    "rcnn-nas-lowproposals-kitti": {
-      "extra_env": {
-        "MODEL_DATASET_TYPE": "kitti",
-        "MODEL_LABELMAP_NAME": "KITTI",
-        "MODEL_LABELMAP_FILE": "kitti_label_map.pbtxt",
-        "MODEL_LABELMAP_EXTRA_TAG": ",vfull",
-        "MODEL_MODEL_ID": "faster_rcnn_nas_lowproposals_kitti",
-        "MODEL_MODEL_NAME": "Faster-RCNN-NAS lowproposals KITTI",
-        "MODEL_DEFAULT_WIDTH": "375",
-        "MODEL_DEFAULT_HEIGHT": "1242",
-        "MODEL_PACKAGE_NAME": "kitti-model-nas-ft.tar.gz",
-        "MODEL_PACKAGE_NAME1": "rcnn-nas-finetune",
-        "MODEL_PACKAGE_URL": "https://www.dropbox.com/s/vdumwu5kjdszbbe/"
-      },
-      "extra_tags": [
-        "rcnn",
-        "non-quantized",
-        "rcnn-nas",
-        "nas",
-        "lowproposals",
-        "non-quantized",
-        "vkitti"
       ]
     },
     "rcnn-resnet50-lowproposals-coco": {
@@ -224,6 +130,53 @@
         "vcoco"
       ]
     },
+    "rcnn-inception-resnet-v2-lowproposals-coco": {
+      "extra_env": {
+        "MODEL_DATASET_TYPE": "coco",
+        "MODEL_LABELMAP_NAME": "COCO",
+        "MODEL_LABELMAP_FILE": "mscoco_label_map.pbtxt",
+        "MODEL_LABELMAP_EXTRA_TAG": "",
+        "MODEL_MODEL_ID": "faster_rcnn_inception_resnet_v2_lowproposals_coco",
+        "MODEL_MODEL_NAME": "Faster-RCNN-Inception-ResNet-v2 lowproposals",
+        "MODEL_DEFAULT_WIDTH": "600",
+        "MODEL_DEFAULT_HEIGHT": "1024",
+        "MODEL_PACKAGE_NAME": "faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco_2018_01_28.tar.gz",
+        "MODEL_PACKAGE_NAME1": "faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco_2018_01_28",
+        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection"
+      },
+      "extra_tags": [
+        "rcnn",
+        "non-quantized",
+        "resnet-v2",
+        "inception",
+        "inception-resnet-v2",
+        "rcnn-inception-resnet-v2",
+        "lowproposals",
+        "vcoco"
+      ]
+    },
+    "rcnn-inception-v2-coco": {
+      "extra_env": {
+        "MODEL_DATASET_TYPE": "coco",
+        "MODEL_LABELMAP_NAME": "COCO",
+        "MODEL_LABELMAP_FILE": "mscoco_label_map.pbtxt",
+        "MODEL_LABELMAP_EXTRA_TAG": "",
+        "MODEL_MODEL_ID": "faster_rcnn_inception_v2_coco",
+        "MODEL_MODEL_NAME": "Faster-RCNN Inception-v2",
+        "MODEL_DEFAULT_WIDTH": "1024",
+        "MODEL_DEFAULT_HEIGHT": "600",
+        "MODEL_PACKAGE_NAME": "faster_rcnn_inception_v2_coco_2018_01_28.tar.gz",
+        "MODEL_PACKAGE_NAME1": "faster_rcnn_inception_v2_coco_2018_01_28",
+        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection"
+      },
+      "extra_tags": [
+        "rcnn",
+        "non-quantized",
+        "inception-v2",
+        "rcnn-inception-v2",
+        "vcoco"
+      ]
+    },
     "ssd-inception-v2-coco": {
       "extra_env": {
         "MODEL_DATASET_TYPE": "coco",
@@ -243,6 +196,28 @@
         "inception-v2",
         "ssd-inception-v2",
         "non-quantized",
+        "vcoco"
+      ]
+    },
+    "ssd_mobilenet_v1_coco": {
+      "extra_env": {
+        "MODEL_DATASET_TYPE": "coco",
+        "MODEL_LABELMAP_NAME": "COCO",
+        "MODEL_LABELMAP_FILE": "mscoco_label_map.pbtxt",
+        "MODEL_LABELMAP_EXTRA_TAG": "",
+        "MODEL_MODEL_ID": "ssd_mobilenet_v1_coco",
+        "MODEL_MODEL_NAME": "SSD-MobileNet-v1 COCO",
+        "MODEL_DEFAULT_WIDTH": "300",
+        "MODEL_DEFAULT_HEIGHT": "300",
+        "MODEL_PACKAGE_NAME": "ssd_mobilenet_v1_coco_2018_01_28.tar.gz",
+        "MODEL_PACKAGE_NAME1": "ssd_mobilenet_v1_coco_2018_01_28",
+        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection"
+      },
+      "extra_tags": [
+        "ssd",
+        "mobilenet-v1",
+        "non-quantized",
+        "mlperf",
         "vcoco"
       ]
     },
@@ -319,28 +294,6 @@
         "ssdlite-mobilenet-v2",
         "non-quantized",
         "vcoco"
-      ]
-    },
-    "ssdlite-mobilenet-v2-kitti": {
-      "extra_env": {
-        "MODEL_DATASET_TYPE": "kitti",
-        "MODEL_LABELMAP_NAME": "KITTI",
-        "MODEL_LABELMAP_FILE": "kitti_label_map.pbtxt",
-        "MODEL_LABELMAP_EXTRA_TAG": ",vfull",
-        "MODEL_MODEL_ID": "ssdlite_mobilenet_v2_kitti",
-        "MODEL_MODEL_NAME": "SSDLite-MobileNet-v2 KITTI",
-        "MODEL_DEFAULT_WIDTH": "300",
-        "MODEL_DEFAULT_HEIGHT": "300",
-        "MODEL_PACKAGE_NAME": "kitti-model-ssdlite-mobilenetv2.tar.gz",
-        "MODEL_PACKAGE_NAME1": "aaa",
-        "MODEL_PACKAGE_URL": "https://www.dropbox.com/s/p6k0j7p9ukux3wt/"
-      },
-      "extra_tags": [
-        "ssdlite",
-        "mobilenet-v2",
-        "ssdlite-mobilenet-v2",
-        "non-quantized",
-        "vkitti"
       ]
     },
     "yolo-v3-coco": {

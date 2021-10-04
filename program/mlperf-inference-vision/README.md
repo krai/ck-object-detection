@@ -151,17 +151,18 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 | MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE |
 | --- | --- | --- |
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` |
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`rcnn-nas-coco`|`default_tf_object_det_zoo`| `COCO` |
-|`yolo-v3-coco`|`tf_yolo`| `COCO` |
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow` |
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd_mobilenet_v1_quantized_coco`|NA|NA|NA|
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
 
 <!-- |`ssdlite-mobilenet-v2-kitti`| `default_tf_object_det_zoo`| `KITTI` |
 |`rcnn-nas-lowproposals-kitti`|`default_tf_object_det_zoo`| `KITTI` | -->
