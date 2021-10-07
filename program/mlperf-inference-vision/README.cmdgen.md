@@ -81,7 +81,7 @@ It will affect the following flags in the ck environment:
 |`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
 |`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
 |`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
-|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
+|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow`, `openvino-cpu`|
 
 Comments: Added `ssd_mobilenet_v1_quantized_coco`.
 

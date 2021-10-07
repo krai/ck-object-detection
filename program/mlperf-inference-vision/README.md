@@ -162,7 +162,7 @@ time docker run -it --rm ${CK_IMAGE} \
 |`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
 |`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
 |`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
-|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
+|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow`,`openvino-cpu`|
 
 <!-- |`ssdlite-mobilenet-v2-kitti`| `default_tf_object_det_zoo`| `KITTI` |
 |`rcnn-nas-lowproposals-kitti`|`default_tf_object_det_zoo`| `KITTI` | -->
