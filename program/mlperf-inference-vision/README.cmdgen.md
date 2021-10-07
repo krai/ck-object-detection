@@ -77,13 +77,13 @@ It will affect the following flags in the ck environment:
 |`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd_mobilenet_v1_quantized_coco`|NA|NA|NA|
+|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
 
-Comments: Added `ssd_mobilenet_v1_coco` and removed `rcnn-nas-coco`. Will add `ssd_mobilenet_v1_quantized_coco` later.
+Comments: Added `ssd_mobilenet_v1_quantized_coco`.
 
 ---
 ---
