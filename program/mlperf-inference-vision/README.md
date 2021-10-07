@@ -274,9 +274,10 @@ time docker run -it --rm ${CK_IMAGE}
 
 
 ## 4) With Different Backend
-(to be confirm) Avalibale backend: tensorflow, openvino-cpu
+Avalibale backend: tensorflow, openvino-cpu
 <!-- tflite, onnxruntime, pytorch, pytorch-native, tensorflowRT -->
 
+Tensorflow example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -288,6 +289,22 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+
+Openvino-cpu example:
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --env.CK_METRIC_TYPE=COCO \
+  --env.CK_LOADGEN_BACKEND=openvino-cpu \
+  --dep_add_tags.lib-tensorflow=vopenvino \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"

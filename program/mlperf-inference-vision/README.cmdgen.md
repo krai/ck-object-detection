@@ -92,7 +92,7 @@ Comments: Added `ssd_mobilenet_v1_quantized_coco`.
 It will affect the following flags in the ck environment:
 ```
 --env.CK_LOADGEN_BACKEND=[INFERENCE]
---dep_add_tags.[INFERENCE_DETAILS]
+--dep_add_tags.[INFERENCE] = [INFERENCE_DETAILS]
 ```
 
 |INFERENCE|INFERENCE_DETAILS|
