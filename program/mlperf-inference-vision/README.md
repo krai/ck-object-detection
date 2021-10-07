@@ -149,19 +149,19 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers \
   --env.CUDA_VISIBLE_DEVICES=-1"
 ```
-| MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE |
-| --- | --- | --- |
+| MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE | FRAMEWORK |
+| --- | --- | --- | --- |
 |`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow` |
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow`, `openvino-cpu`|
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, `openvino-cpu`|
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, (`openvino-cpu` maybe very slow) |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`, `vopenvino`|
 |`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
 |`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
 
 <!-- |`ssdlite-mobilenet-v2-kitti`| `default_tf_object_det_zoo`| `KITTI` |
@@ -274,7 +274,8 @@ time docker run -it --rm ${CK_IMAGE}
 
 
 ## 4) With Different Backend
-(to be confirm) Avalibale backend: tensorflow, tflite, onnxruntime, pytorch, pytorch-native, tensorflowRT
+(to be confirm) Avalibale backend: tensorflow, openvino-cpu
+<!-- tflite, onnxruntime, pytorch, pytorch-native, tensorflowRT -->
 
 ```
 time docker run -it --rm ${CK_IMAGE} \

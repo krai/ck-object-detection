@@ -71,16 +71,16 @@ It will affect the following flags in the ck environment:
 | MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE | FRAMEWORK |
 | --- | --- | --- | --- |
 |`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow` |
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow`, `openvino-cpu`|
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, `openvino-cpu`|
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, (`openvino-cpu` maybe very slow) |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`, `vopenvino`|
 |`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
 |`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow` |
 
 Comments: Added `ssd_mobilenet_v1_quantized_coco`.
@@ -89,12 +89,13 @@ Comments: Added `ssd_mobilenet_v1_quantized_coco`.
 ---
 
 ## Mapping for `--library`
-Given that the `--env.CK_LOADGEN_BACKEND=tensorflow `, we can use the tags in the table to specify the details of the inference. It will affect the following flags in the ck environment:
+It will affect the following flags in the ck environment:
 ```
---dep_add_tags.lib-tensorflow=[INFERENCE_DETAILS]
+--env.CK_LOADGEN_BACKEND=[INFERENCE]
+--dep_add_tags.[INFERENCE_DETAILS]
 ```
-|INFERENCE_DETAILS|
-|---|
-|`vpip` |
 
-If it is not `--env.CK_LOADGEN_BACKEND=tensorflow `, there are others `--dep_add_tags.[INFERENCE_FRAMEWORK]` and their corresponding inference details. 
+|INFERENCE|INFERENCE_DETAILS|
+|---|---|
+|`tensorflow` |`vpip` |
+|`openvino-cpu` |`vopenvino`|
