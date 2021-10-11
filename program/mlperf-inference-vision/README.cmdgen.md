@@ -18,9 +18,9 @@ time docker run -it --rm ${CK_IMAGE} \
     --dep_add_tags.weights=yolo-v3-coco \
     --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
     --env.CK_METRIC_TYPE=COCO \
-    --env.CK_LOADGEN_BACKEND=tensorflow \
+    --env.CK_INFERENCE_ENGINE=tensorflow \
     \
-    --dep_add_tags.lib-tensorflow=vpip\
+    --dep_add_tags.inference-engine-backend=vpip\
     --env.CUDA_VISIBLE_DEVICES=-1 \
     \
     --skip_print_timers"

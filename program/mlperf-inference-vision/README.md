@@ -23,8 +23,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -114,8 +114,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_METRIC_TYPE=[DATA_TYPE] \
 
   # Backend_Specifications
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip \
 
   # Scenario_Specifications
   --env.CK_LOADGEN_SCENARIO=Offline \
@@ -141,8 +141,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE] \
   --env.CK_METRIC_TYPE=[DATA_TYPE] \
   \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip \
   --env.CK_LOADGEN_SCENARIO=Offline \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
@@ -186,8 +186,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -203,8 +203,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -226,8 +226,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -242,8 +242,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -266,8 +266,8 @@ time docker run -it --rm ${CK_IMAGE}
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
 ```
@@ -281,8 +281,8 @@ Tensorflow example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
-  --env.CK_LOADGEN_BACKEND=[BACKEND] \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=[BACKEND] \
+  --dep_add_tags.inference-engine-backend=vpip\
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
@@ -303,8 +303,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=rcnn-inception-v2-coco \
   --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=openvino-cpu \
-  --dep_add_tags.lib-tensorflow=vopenvino \
+  --env.CK_INFERENCE_ENGINE=openvino-cpu \
+  --dep_add_tags.inference-engine-backend=vopenvino \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -323,8 +323,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
-  --env.CK_LOADGEN_BACKEND=tensorflow \
-  --dep_add_tags.lib-tensorflow=vpip\
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --dep_add_tags.inference-engine-backend=vpip\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
