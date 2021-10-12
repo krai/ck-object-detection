@@ -24,7 +24,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -80,10 +80,7 @@ $ ck install ck-tensorflow:package:tensorflowmodel-api
 
 Install one or more object detection model package:
 ```bash
-$ ck install package --tags=tensorflowmodel,object-detection
-
- 0) tensorflowmodel-object-detection-ssd-resnet50-v1-fpn-sbp-640x640-coco  Version 20170714  (09baac5e6f931db2)
- 1) tensorflowmodel-object-detection-ssd-mobilenet-v1-coco  Version 20170714  (385831f88e61be8c)
+$ ck install package --tags=object-detection,model,tf,tensorflow,tf1-zoo
 ```
 
 ### Datasets
@@ -115,7 +112,7 @@ time docker run -it --rm ${CK_IMAGE} \
 
   # Backend_Specifications
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip \
+  --dep_add_tags.inference-engine-backend=default \
 
   # Scenario_Specifications
   --env.CK_LOADGEN_SCENARIO=Offline \
@@ -142,7 +139,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_METRIC_TYPE=[DATA_TYPE] \
   \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip \
+  --dep_add_tags.inference-engine-backend=default \
   --env.CK_LOADGEN_SCENARIO=Offline \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
@@ -155,7 +152,7 @@ time docker run -it --rm ${CK_IMAGE} \
 |`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow`, `openvino-cpu`|
 |`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, `openvino-cpu`|
 |`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, (`openvino-cpu` maybe very slow) |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`, `vopenvino`|
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`, `openvino-cpu`|
 |`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
 |`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
@@ -187,7 +184,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -204,7 +201,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -227,7 +224,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -243,7 +240,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -267,7 +264,7 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
 ```
@@ -282,7 +279,7 @@ Tensorflow example:
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
   --env.CK_INFERENCE_ENGINE=[BACKEND] \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
@@ -304,7 +301,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=openvino-cpu \
-  --dep_add_tags.inference-engine-backend=vopenvino \
+  --dep_add_tags.inference-engine-backend=openvino \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
@@ -324,7 +321,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
   --env.CK_METRIC_TYPE=COCO \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=vpip\
+  --dep_add_tags.inference-engine-backend=default\
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
