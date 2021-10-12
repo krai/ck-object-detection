@@ -1,0 +1,15 @@
+{
+  "backup_data_uid": "e88e4815b38d44da",
+  "backup_module_uid": "1dc07ee0f4742028",
+  "backup_module_uoa": "package",
+  "control": {
+    "engine": "CK",
+    "iso_datetime": "2021-10-11T08:35:36.063436",
+    "version": [
+      "2",
+      "5",
+      "8"
+    ]
+  },
+  "data_name": "model-tf2-object-detection-zoo"
+}

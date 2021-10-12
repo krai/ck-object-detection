@@ -93,7 +93,7 @@
       "enable_if_env": [
         { 
           "CK_INFERENCE_ENGINE": ["tensorflow"],
-          "CK_INFERENCE_ENGINE_BACKEND": ["default"]
+          "CK_INFERENCE_ENGINE_BACKEND": ["default-cpu","default-gpu"]
         }
       ],
       "local": "yes",
@@ -106,7 +106,7 @@
       "enable_if_env": [
         {
           "CK_INFERENCE_ENGINE": ["tensorflow"],
-          "CK_INFERENCE_ENGINE_BACKEND": ["openvino-cpu"]
+          "CK_INFERENCE_ENGINE_BACKEND": ["openvino-cpu","openvino-gpu"]
         }
       ],
       "local": "yes",
@@ -147,7 +147,7 @@
     "CK_LOADGEN_REF_PROFILE": "default_tf_object_det_zoo",
     "CK_LOADGEN_SCENARIO": "SingleStream",
     "CK_INFERENCE_ENGINE": "tensorflow",
-    "CK_INFERENCE_ENGINE_BACKEND": "default",
+    "CK_INFERENCE_ENGINE_BACKEND": "default-gpu",
     "CK_LOADGEN_MODE": "--accuracy",
     "CK_LOADGEN_TENSORRT_BATCH_SIZE": "1",
     "CK_LOADGEN_TENSORRT_PRECISION": "FP32",

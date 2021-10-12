@@ -19,7 +19,7 @@ time docker run -it --rm ${CK_IMAGE} \
     --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
     \
     --env.CK_INFERENCE_ENGINE=tensorflow \
-    --env.CK_INFERENCE_ENGINE_BACKEND=default\
+    --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu\
     --env.CUDA_VISIBLE_DEVICES=-1 \
     \
     --skip_print_timers"
@@ -65,22 +65,23 @@ It will affect the following flags in the ck environment:
 --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE]
 --env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE]
 --env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND]
+--env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER] (will be discussed in the next section)
 ```
 
 | MODEL_NAME | LOADGEN_PROFILE | INFERENCE_ENGINE:INFERENCE_ENGINE_BACKEND |
 | --- | --- | --- |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `tensorflow`:`default`, `tensorflow`:`openvino-cpu`|
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default`, `tensorflow`:`openvino-cpu`|
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default` , (`tensorflow`:`openvino-cpu` maybe very slow) |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default` , `tensorflow`:`openvino-cpu`|
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default`  |
-|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default`  |
-|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default`  |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default` |
-|`yolo-v3-coco`|`tf_yolo`| `tensorflow`:`default`, `tensorflow`:`openvino-cpu`|
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu` |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu`|
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
+|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
+|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
+|`yolo-v3-coco`|`tf_yolo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
 
 ---
 ---
@@ -90,9 +91,12 @@ It will affect the following flags in the ck environment:
 ```
 --env.CK_INFERENCE_ENGINE =[INFERENCE_ENGINE]
 --env.CK_INFERENCE_ENGINE_BACKEND = [INFERENCE_ENGINE_BACKEND]
+--env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER]
 ```
 
-|INFERENCE_ENGINE|INFERENCE_ENGINE_BACKEND|
-|---|---|
-|`tensorflow` |`default` |
-|`tensorflow` |`openvino-cpu`|
+|INFERENCE_ENGINE|INFERENCE_ENGINE_BACKEND|DEVICE_NUMBER|
+|---|---|---|
+|`tensorflow` |`default-cpu` |`-1`|
+|`tensorflow` |`default-gpu` |`0`|
+|`tensorflow` |`openvino-cpu`|`-1`|
+|`tensorflow` |`openvino-gpu` |`-1` for Intel CPU with Intergrated GPU; `0` for Intel GPU|
