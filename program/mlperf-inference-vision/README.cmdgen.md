@@ -34,7 +34,7 @@ It will affect the following flags in the ck environment:
 ```
 |SCENARIO|
 |---|
-| `SingleStrem` |
+| `SingleStream` |
 | `MultiStream` | 
 | `Server` |
 | `Offline` |
@@ -99,4 +99,4 @@ It will affect the following flags in the ck environment:
 |`tensorflow` |`default-cpu` |`-1`|
 |`tensorflow` |`default-gpu` |`0`|
 |`tensorflow` |`openvino-cpu`|`-1`|
-|`tensorflow` |`openvino-gpu` |`-1` for Intel CPU with Intergrated GPU; `0` for Intel GPU|
+|`tensorflow` |`openvino-gpu` |`-1` for an Intel chip with an integrated GPU; `0` for an Intel GPU|

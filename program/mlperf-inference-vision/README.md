@@ -210,7 +210,7 @@ Change the tag `--env.CK_LOADGEN_SCENARIO` to specify it
 
 |SCENARIO|
 |---|
-| `SingleStrem`, `MultiStream`, `Server`, `Offline` |
+| `SingleStream`, `MultiStream`, `Server`, `Offline` |
 
 ```
 time docker run -it --rm ${CK_IMAGE} 
@@ -305,7 +305,9 @@ time docker run -it --rm ${CK_IMAGE} \
 
 #### Example `tensorflow:openvino-gpu` (Untested): 
 
-`Openvino` only works with Intel devices. If the machine has a Intel CPU with Intergrated GPU, set `--env.CUDA_VISIBLE_DEVICES=-1`:
+`openvino` only works with Intel devices.
+
+If the machine has an Intel chip with an integrated GPU, set `--env.CUDA_VISIBLE_DEVICES=-1`:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -320,7 +322,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
-If the machine has a Intel GPU, set `--env.CUDA_VISIBLE_DEVICES=0`:
+If the machine has an Intel GPU, set `--env.CUDA_VISIBLE_DEVICES=0`:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
