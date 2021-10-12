@@ -18,9 +18,9 @@ time docker run -it --rm ${CK_IMAGE} \
     --dep_add_tags.weights=yolo-v3-coco \
     --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
     --env.CK_METRIC_TYPE=COCO \
-    --env.CK_INFERENCE_ENGINE=tensorflow \
     \
-    --dep_add_tags.inference-engine-backend=vpip\
+    --env.CK_INFERENCE_ENGINE=tensorflow \
+    --env.CK_INFERENCE_ENGINE_BACKEND=default\
     --env.CUDA_VISIBLE_DEVICES=-1 \
     \
     --skip_print_timers"
@@ -65,25 +65,24 @@ It will affect the following flags in the ck environment:
 --dep_add_tags.weights=[MODEL_NAME]
 --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE]
 --env.CK_METRIC_TYPE=[DATA_TYPE]
---env.CK_LOADGEN_BACKEND=[FRAMEWORK]
+--env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE]
+--env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND]
 ```
 
-| MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE | FRAMEWORK |
+| MODEL_NAME | LOADGEN_PROFILE | DATA_TYPE | INFERENCE_ENGINE:INFERENCE_ENGINE_BACKEND |
 | --- | --- | --- | --- |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow`, `openvino-cpu`|
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, `openvino-cpu`|
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`, (`openvino-cpu` maybe very slow) |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`, `vopenvino`|
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow` |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`|
-|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow`, `openvino-cpu`|
-
-Comments: Added `ssd_mobilenet_v1_quantized_coco`.
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `COCO` | `tensorflow`:`default`, `tensorflow`:`openvino-cpu`|
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default`, `tensorflow`:`openvino-cpu`|
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default` , (`tensorflow`:`openvino-cpu` maybe very slow) |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default` , `tensorflow`:`openvino-cpu`|
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default`  |
+|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default`  |
+|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default`  |
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default` |
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default` |
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `COCO` | `tensorflow`:`default` |
+|`yolo-v3-coco`|`tf_yolo`| `COCO` | `tensorflow`:`default`, `tensorflow`:`openvino-cpu`|
 
 ---
 ---
@@ -91,11 +90,11 @@ Comments: Added `ssd_mobilenet_v1_quantized_coco`.
 ## Mapping for `--library`
 It will affect the following flags in the ck environment:
 ```
---env.CK_LOADGEN_BACKEND=[INFERENCE]
---dep_add_tags.[INFERENCE] = [INFERENCE_DETAILS]
+--env.CK_INFERENCE_ENGINE =[INFERENCE_ENGINE]
+--env.CK_INFERENCE_ENGINE_BACKEND = [INFERENCE_ENGINE_BACKEND]
 ```
 
-|INFERENCE|INFERENCE_DETAILS|
+|INFERENCE_ENGINE|INFERENCE_ENGINE_BACKEND|
 |---|---|
-|`tensorflow` |`vpip` |
-|`openvino-cpu` |`vopenvino`|
+|`tensorflow` |`default` |
+|`tensorflow` |`openvino-cpu`|
