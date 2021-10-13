@@ -277,7 +277,7 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 
 
-## 5) Select an Inference Engine and an Inference Engine Backend
+## 5) Select an Engine/Backend/Device
 
 ### Supported `INFERENCE_ENGINE`/`INFERENCE_ENGINE_BACKEND`/`CUDA_VISIBLE_DEVICES` combinations
 
@@ -309,7 +309,7 @@ time docker run -it --rm ${CK_IMAGE} \
 
 #### `tensorflow/default-gpu/0`
 ```
-time docker run -it --rm ${CK_IMAGE} \
+time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-gpu \
