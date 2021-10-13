@@ -1,13 +1,19 @@
-## Overview of cmdgen
-Cmdgen:
+# MLPerf Inference Vision - extended for Object Detection - CmdGen
+
+CmdGen maps high-level CmdGen commands to low-level CK commands.
+
+## Example
+
+A high-level command:
+
 ```
-time docker run -it --rm ${CK_IMAGE} \
-"ck run cmdgen:benchmark.mlperf-inference-vision \
-    --scenario=offline --mode=accuracy --mode-param=50 \
-    --model=yolo-v3-coco \
-    --library=tensorflow-v2.6.0-cpu"
+"ck gen cmdgen:benchmark.mlperf-inference-vision \
+  --scenario=offline --mode=accuracy --dataset_size=50 \
+  --model=yolo-v3-coco --library=tensorflow-v2.6.0-cpu"
 ```
-What it actually represents in ck environment:
+
+gets mapped to:
+
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -27,8 +33,13 @@ time docker run -it --rm ${CK_IMAGE} \
 
 ---
 ---
-## Mapping for `--scenario`
-It will affect the following flags in the ck environment:
+
+## Mappings
+
+### Mapping for `--scenario`
+
+It will affect the following flags in the CK environment:
+
 ```
 --env.CK_LOADGEN_SCENARIO=[SCENARIO]
 ```
@@ -42,9 +53,10 @@ It will affect the following flags in the ck environment:
 ---
 ---
 
-## Mapping for `--mode` and `--mode-param`
+### Mapping for `--mode` and `--mode-param`
+
 `mode` for specifying mode and `mode-param` for specifying count or qps. 
-It will affect the following flags in the ck environment:
+It will affect the following flags in the CK environment:
 ```
 --env.CK_LOADGEN_MODE
 --env.CK_LOADGEN_EXTRA_PARAMS
@@ -58,7 +70,8 @@ It will affect the following flags in the ck environment:
 ---
 ---
 
-## Mapping for `--model`
+### Mapping for `--model`
+
 It will affect the following flags in the ck environment:
 ```
 --dep_add_tags.weights=[MODEL_NAME]
@@ -89,12 +102,12 @@ It will affect the following flags in the ck environment:
 ## Mapping for `--library`
 It will affect the following flags in the ck environment:
 ```
---env.CK_INFERENCE_ENGINE =[INFERENCE_ENGINE]
---env.CK_INFERENCE_ENGINE_BACKEND = [INFERENCE_ENGINE_BACKEND]
---env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER]
+--env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE]
+--env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND]
+--env.CUDA_VISIBLE_DEVICES=[DEVICE_IDS]
 ```
 
-|INFERENCE_ENGINE|INFERENCE_ENGINE_BACKEND|DEVICE_NUMBER|
+|INFERENCE_ENGINE|INFERENCE_ENGINE_BACKEND|DEVICE_IDS|
 |---|---|---|
 |`tensorflow` |`default-cpu` |`-1`|
 |`tensorflow` |`default-gpu` |`0`|
