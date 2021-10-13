@@ -4,20 +4,20 @@ This Collective Knowledge workflow is based on the [official MLPerf Inference Vi
 
 The table below shows currently supported models, frameworks ("inference engines") and library/device combinations ("inference engine backends").
 
-| `MODEL_NAME`                                | `INFERENCE_ENGINE`  | `INFERENCE_ENGINE_BACKEND` |
-| ---                                         | ---                 | --- |
-|`rcnn-nas-lowproposals-coco`                 | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
-|`rcnn-resnet50-lowproposals-coco`            | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
-|`rcnn-resnet101-lowproposals-coco`           | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
-|`rcnn-inception-resnet-v2-lowproposals-coco` | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
-|`rcnn-inception-v2-coco`                     | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
-|`ssd-inception-v2-coco`                      | `tensorflow`        | `default-cpu`,`default-gpu` |
-|`ssd_mobilenet_v1_coco`                      | `tensorflow`        | `default-cpu`,`default-gpu` |
-|`ssd_mobilenet_v1_quantized_coco`            | `tensorflow`        | `default-cpu`,`default-gpu` |
-|`ssd-mobilenet-v1-fpn-sbp-coco`              | `tensorflow`        | `default-cpu`,`default-gpu` |
-|`ssd-resnet50-v1-fpn-sbp-coco`               | `tensorflow`        | `default-cpu`,`default-gpu` |
-|`ssdlite-mobilenet-v2-coco`                  | `tensorflow`        | `default-cpu`,`default-gpu` |
-|`yolo-v3-coco` |                             | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
+| `MODEL_NAME`                                 | `INFERENCE_ENGINE`  | `INFERENCE_ENGINE_BACKEND`                 |
+| -------------------------------------------- | ------------------- | ------------------------------------------ |
+| `rcnn-nas-lowproposals-coco`                 | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
+| `rcnn-resnet50-lowproposals-coco`            | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
+| `rcnn-resnet101-lowproposals-coco`           | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
+| `rcnn-inception-resnet-v2-lowproposals-coco` | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
+| `rcnn-inception-v2-coco`                     | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
+| `ssd-inception-v2-coco`                      | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `ssd_mobilenet_v1_coco`                      | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `ssd_mobilenet_v1_quantized_coco`            | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `ssd-mobilenet-v1-fpn-sbp-coco`              | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `ssd-resnet50-v1-fpn-sbp-coco`               | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `ssdlite-mobilenet-v2-coco`                  | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `yolo-v3-coco`                               | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
 
 
 # Build the environment:
