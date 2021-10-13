@@ -1,39 +1,46 @@
-# TensorFlow object-detection program
+# MLPerf Inference Vision - extended for Object Detection
 
-Our program supports the following object detection models. We also offer a few options for inference engine and inference engine backend. 
+This Collective Knowledge workflow is based on the [official MLPerf Inference Vision application](https://github.com/mlcommons/inference/tree/master/vision/classification_and_detection) extended for diverse Object Detection models, as found e.g. in the [TF1 Object Detection Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf1_detection_zoo.md) and the [TF2 Object Detection Zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md).
 
-| MODEL_NAME | MODEL_PROFILE | INFERENCE_ENGINE:INFERENCE_ENGINE_BACKEND |
-| --- | --- | --- |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu`|
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`yolo-v3-coco`|`tf_yolo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+The table below shows currently supported models, frameworks ("inference engines") and library/device combinations ("inference engine backends").
 
+| `MODEL_NAME`                                | `INFERENCE_ENGINE`  | `INFERENCE_ENGINE_BACKEND` |
+| ---                                         | ---                 | --- |
+|`rcnn-nas-lowproposals-coco`                 | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
+|`rcnn-resnet50-lowproposals-coco`            | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
+|`rcnn-resnet101-lowproposals-coco`           | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
+|`rcnn-inception-resnet-v2-lowproposals-coco` | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
+|`rcnn-inception-v2-coco`                     | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
+|`ssd-inception-v2-coco`                      | `tensorflow`        | `default-cpu`,`default-gpu` |
+|`ssd_mobilenet_v1_coco`                      | `tensorflow`        | `default-cpu`,`default-gpu` |
+|`ssd_mobilenet_v1_quantized_coco`            | `tensorflow`        | `default-cpu`,`default-gpu` |
+|`ssd-mobilenet-v1-fpn-sbp-coco`              | `tensorflow`        | `default-cpu`,`default-gpu` |
+|`ssd-resnet50-v1-fpn-sbp-coco`               | `tensorflow`        | `default-cpu`,`default-gpu` |
+|`ssdlite-mobilenet-v2-coco`                  | `tensorflow`        | `default-cpu`,`default-gpu` |
+|`yolo-v3-coco` |                             | `tensorflow`        | `default-cpu`,`default-gpu`, `openvino-cpu` |
 
 
 # Build the environment:
 
 ## 1) Docker
-Build the docker image and container with the build file from `ck-mlperf/docker/mlperf-inference-vision-with-ck.tensorrt/build.sh`. Also, set the image name:
+
+Build the Docker image by running the build script `ck-mlperf/docker/mlperf-inference-vision-with-ck.tensorrt/build.sh`.
+
+Also, set the image name:
+
 ```
 export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.08-py3_tf-2.6.0"
 ```
 
-### a) Just run the docker AND execute the intended ck command
+### a) Just run the docker AND execute the intended CK command
+
 Following the format below:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision ... "
 ```
-Quick Example:
+
+Example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -48,24 +55,33 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
-### b) To run custom command and edit the environment
-use the following to create a dummy container `ck`
+### b) To run a custom command and edit the environment
+
+#### Create a container called `ck`
+
+##### Without GPU support
+
 ```
 docker run -td --entrypoint /bin/bash --name ck ${CK_IMAGE}
 ```
-or also enable GPU support
+
+##### With GPU support
 ```
 docker run -td --runtime=nvidia --entrypoint /bin/bash --name ck ${CK_IMAGE}
 ```
-Getting into the container
+
+#### Start the container
+
 ```
 docker exec -it ck /bin/bash
 ```
-Stopping the container
+
+#### Stop the container
 ```
 docker stop ck
 ```
-Remove the container
+
+#### Remove the container
 ```
 docker rm ck
 ```
@@ -75,8 +91,8 @@ docker rm ck
 ### Repositories
 
 ```bash
-$ ck pull repo:ck-object-detection
-$ ck pull repo:ck-tensorflow
+$ ck pull repo:ck-object-detection --url=https://github.com/krai/ck-object-detection
+$ ck pull repo:ck-tensorflow --url=https://github.com/krai/ck-tensorflow
 ```
 
 ### TensorFlow
@@ -120,13 +136,12 @@ $ ck show env --tags=dataset,coco
 ```
 
 ---
----
 
-# Running 
+# Running
 ## 0) General Form:
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct 
+"ck run program:mlperf-inference-vision --cmd_key=direct
   # Model_Specifications
   --dep_add_tags.weights=[MODEL_NAME] \
   --env.CK_MODEL_PROFILE=[MODEL_PROFILE] \
@@ -144,38 +159,43 @@ time docker run -it --rm ${CK_IMAGE} \
   # Mode_Specifications
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  
+
   # Others
   --skip_print_timers"
 ```
 
 
-## 1) With Different Model
-Change the `--dep_add_tags.weights`, `--env.CK_MODEL_PROFILE`, `--env.CK_INFERENCE_ENGINE`, `--env.CK_INFERENCE_ENGINE_BACKEND` as listed in the top table to run different model. The flag `--env.CUDA_VISIBLE_DEVICES` will also be affected, [DEVICE_NUMBER] is `-1` for `-cpu` and `0` for `-gpu`.
-```
-time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \ 
-  --dep_add_tags.weights=[MODEL_NAME] \
-  --env.CK_MODEL_PROFILE=[MODEL_PROFILE] \
-  --env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE] \
-  --env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND] \
-  --env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER] \
-  \
-  --env.CK_LOADGEN_SCENARIO=Offline \
-  --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --skip_print_timers"
-```
+## 1) Specify a Model
 
-## 2) With Different Mode:
-Mode could be changed by the tags `--env.CK_LOADGEN_MODE`. (When specified is accuracy, when not specified is performance.) In accuracy and performance mode, we can specify the count for accuracy mode and the qps for performance mode with the tag `--env.CK_LOADGEN_EXTRA_PARAMS`
-
-| Accuracy Mode | Performance Mode |
-| --- | ---|
-|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
+Specify both `--dep_add_tags.weights=[MODEL_NAME]` and `--env.CK_MODEL_PROFILE=[MODEL_PROFILE]`.
 
 
-Accuracy Mode Example:
+### Supported `MODEL_NAME`/`MODEL_PROFILE` combinations
+
+| `MODEL_NAME`                               | `MODEL_PROFILE`             |
+| ------------------------------------------ | --------------------------- |
+|`rcnn-nas-lowproposals-coco`                | `default_tf_object_det_zoo` |
+|`rcnn-resnet50-lowproposals-coco`           | `default_tf_object_det_zoo` |
+|`rcnn-resnet101-lowproposals-coco`          | `default_tf_object_det_zoo` |
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo` |
+|`rcnn-inception-v2-coco`                    | `default_tf_object_det_zoo` |
+|`ssd-inception-v2-coco`                     | `default_tf_object_det_zoo` |
+|`ssd_mobilenet_v1_coco`                     | `default_tf_object_det_zoo` |
+|`ssd_mobilenet_v1_quantized_coco`           | `default_tf_object_det_zoo` |
+|`ssd-mobilenet-v1-fpn-sbp-coco`             | `default_tf_object_det_zoo` |
+|`ssd-resnet50-v1-fpn-sbp-coco`              | `default_tf_object_det_zoo` |
+|`ssdlite-mobilenet-v2-coco`                 | `default_tf_object_det_zoo` |
+|`yolo-v3-coco`                              | `tf_yolo`                   |
+
+
+## 2) Specify a Mode
+
+The LoadGen mode can be selected by the environment variable `--env.CK_LOADGEN_MODE`. (When the mode is specified, it is `AccuracyOnly`; otherwise, it is `PerformanceOnly`.)
+
+### Accuracy
+
+For the Accuracy mode, you can specify the number of samples to process e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'`.
+
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -191,7 +211,11 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
-Performance Mode Example:
+### Performance
+
+For the performance mode, you should specify the expected QPS e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--qps=30'`. We also recommended to specify `--env.CK_OPTIMIZE_GRAPH='True'`.
+
+Example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -207,16 +231,16 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
-## 3) With Different Scenario:
+## 3) Specify a Scenario
 
-Change the tag `--env.CK_LOADGEN_SCENARIO` to specify it
+You can specify the scenario with the `--env.CK_LOADGEN_SCENARIO` environment variable.
 
 |SCENARIO|
 |---|
 | `SingleStream`, `MultiStream`, `Server`, `Offline` |
 
 ```
-time docker run -it --rm ${CK_IMAGE} 
+time docker run -it --rm ${CK_IMAGE}
 "ck run program:mlperf-inference-vision --cmd_key=direct \
   --env.CK_LOADGEN_SCENARIO=[SCENARIO] \
   \
@@ -230,8 +254,11 @@ time docker run -it --rm ${CK_IMAGE}
   --skip_print_timers"
 ```
 
-## 4) Whether to use `optimize_for_inference` lib to optimise the graph
-Default option is `False`, can be explicitly configured with `--env.CK_OPTIMIZE_GRAPH`. We recommended it to be set as `False` when running the accuracy mode, and `True` when running the performance mode.
+## 4) Whether to use `optimize_for_inference` lib to optimize the graph
+
+Use the environment variable `--env.CK_OPTIMIZE_GRAPH` to configure whether to optimize the model graph for execution (default: `False`).
+
+We recommended it to be set to `False` when running in the Accuracy mode, and to `True` when running in the Performance mode.
 
 ```
 time docker run -it --rm ${CK_IMAGE} \
@@ -250,15 +277,21 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 
 
-## 5) With Different Inference Engine and Inference Engine Backend
-Avalibale Inference_Engine:Inference_Engine_Backend pairs : `tensorflow:default-cpu`, `tensorflow:default-gpu`, `tensorflow:openvino-cpu`. Please also pass in relevant `CUDA_VISIBLE_DEVICES`.
+## 5) Select an Inference Engine and an Inference Engine Backend
 
-| `-cpu` | `-gpu` |
-| --- | ---|
-|`--env.CUDA_VISIBLE_DEVICES=-1` | `--env.CUDA_VISIBLE_DEVICES=n` |
-where `n=0,1,2,...` depending on which GPU to be used. 
+### Supported `INFERENCE_ENGINE`/`INFERENCE_ENGINE_BACKEND`/`CUDA_VISIBLE_DEVICES` combinations
 
-#### Example `tensorflow:default-cpu`:
+| `INFERENCE_ENGINE` | `INFERENCE_ENGINE_BACKEND`  | `CUDA_VISIBLE_DEVICES`       |
+| ------------------ | --------------------------- | ---------------------------- | 
+| `tensorflow`       | `default-cpu`               | `-1`                         | 
+| `tensorflow`       | `default-gpu`               | `<device_id>`                | 
+| `tensorflow`       | `openvino-cpu`              | `-1`                         | 
+| `tensorflow`       | `openvino-gpu` (not tested) | `-1` (integrated Intel GPU)  |
+| `tensorflow`       | `openvino-gpu` (not tested) | `0` (discreet Intel GPU)     |
+
+### Examples
+
+#### `tensorflow/default-cpu/-1`
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -274,7 +307,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
-#### Example `tensorflow:default-gpu`:
+#### `tensorflow/default-gpu/0`
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -290,7 +323,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
-#### Example `tensorflow:openvino-cpu`:
+#### `tensorflow/openvino-cpu/-1`
+
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
@@ -306,9 +340,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --skip_print_timers"
 ```
 
-#### Example `tensorflow:openvino-gpu` (Untested): 
-
-`openvino` only works with Intel devices.
+#### `tensorflow/openvino-gpu/-1` (not tested)
 
 If the machine has an Intel chip with an integrated GPU, set `--env.CUDA_VISIBLE_DEVICES=-1`:
 ```
@@ -325,7 +357,10 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
-If the machine has an Intel GPU, set `--env.CUDA_VISIBLE_DEVICES=0`:
+
+#### `tensorflow/openvino-gpu/0` (not tested)
+
+If the machine has a discreet Intel GPU, set `--env.CUDA_VISIBLE_DEVICES=0`:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
