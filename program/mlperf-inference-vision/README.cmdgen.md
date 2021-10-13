@@ -16,7 +16,7 @@ time docker run -it --rm ${CK_IMAGE} \
     --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
     \
     --dep_add_tags.weights=yolo-v3-coco \
-    --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+    --env.CK_MODEL_PROFILE=tf_yolo \
     \
     --env.CK_INFERENCE_ENGINE=tensorflow \
     --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu\
@@ -62,26 +62,26 @@ It will affect the following flags in the ck environment:
 It will affect the following flags in the ck environment:
 ```
 --dep_add_tags.weights=[MODEL_NAME]
---env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE]
---env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE]
---env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND]
+--env.CK_MODEL_PROFILE=[MODEL_PROFILE]
+--env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE] (as shown in README.md)
+--env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND] (as shown in README.md)
 --env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER] (will be discussed in the next section)
 ```
 
-| MODEL_NAME | LOADGEN_PROFILE | INFERENCE_ENGINE:INFERENCE_ENGINE_BACKEND |
-| --- | --- | --- |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu`|
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`yolo-v3-coco`|`tf_yolo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+| MODEL_NAME | MODEL_PROFILE |
+| --- | --- | 
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| 
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| 
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| 
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| 
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`|
+|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| 
+|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| 
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| 
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| 
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`|
+|`yolo-v3-coco`|`tf_yolo`| 
 
 ---
 ---

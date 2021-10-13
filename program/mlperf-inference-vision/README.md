@@ -1,5 +1,24 @@
 # TensorFlow object-detection program
 
+Our program supports the following object detection models. We also offer a few options for inference engine and inference engine backend. 
+
+| MODEL_NAME | MODEL_PROFILE | INFERENCE_ENGINE:INFERENCE_ENGINE_BACKEND |
+| --- | --- | --- |
+|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu` |
+|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu` |
+|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu`|
+|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
+|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
+|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
+|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
+|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
+|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
+|`yolo-v3-coco`|`tf_yolo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
+
+
+
 # Build the environment:
 
 ## 1) Docker
@@ -21,7 +40,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -110,7 +129,7 @@ time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct 
   # Model_Specifications
   --dep_add_tags.weights=[MODEL_NAME] \
-  --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE] \
+  --env.CK_MODEL_PROFILE=[MODEL_PROFILE] \
   --env.CK_METRIC_TYPE=[DATA_TYPE] \
 
   # Backend_Specifications
@@ -132,12 +151,12 @@ time docker run -it --rm ${CK_IMAGE} \
 
 
 ## 1) With Different Model
-Change the `--dep_add_tags.weights`, `--env.CK_LOADGEN_REF_PROFILE`, `--env.CK_METRIC_TYPE` as listed in the table to run different model. [DEVICE_NUMBER] will be `-1` for `-cpu` and `0` for `-gpu`.
+Change the `--dep_add_tags.weights`, `--env.CK_MODEL_PROFILE`, `--env.CK_INFERENCE_ENGINE`, `--env.CK_INFERENCE_ENGINE_BACKEND` as listed in the top table to run different model. The flag `--env.CUDA_VISIBLE_DEVICES` will also be affected, [DEVICE_NUMBER] is `-1` for `-cpu` and `0` for `-gpu`.
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \ 
   --dep_add_tags.weights=[MODEL_NAME] \
-  --env.CK_LOADGEN_REF_PROFILE=[LOADGEN_PROFILE] \
+  --env.CK_MODEL_PROFILE=[MODEL_PROFILE] \
   --env.CK_INFERENCE_ENGINE=[INFERENCE_ENGINE] \
   --env.CK_INFERENCE_ENGINE_BACKEND=[INFERENCE_ENGINE_BACKEND] \
   --env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER] \
@@ -147,22 +166,6 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --skip_print_timers"
 ```
-
-| MODEL_NAME | LOADGEN_PROFILE | INFERENCE_ENGINE:INFERENCE_ENGINE_BACKEND |
-| --- | --- | --- |
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu` |
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu` |
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` , `tensorflow`:`openvino-cpu`|
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`  |
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu` |
-|`yolo-v3-coco`|`tf_yolo`| `tensorflow`:`default-cpu`,`tensorflow`:`default-gpu`, `tensorflow`:`openvino-cpu`|
-
 
 ## 2) With Different Mode:
 Mode could be changed by the tags `--env.CK_LOADGEN_MODE`. (When specified is accuracy, when not specified is performance.) In accuracy and performance mode, we can specify the count for accuracy mode and the qps for performance mode with the tag `--env.CK_LOADGEN_EXTRA_PARAMS`
@@ -180,7 +183,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -196,7 +199,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -220,7 +223,7 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu\
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -228,7 +231,7 @@ time docker run -it --rm ${CK_IMAGE}
 ```
 
 ## 4) Whether to use `optimize_for_inference` lib to optimise the graph
-Default option is `False`, can be explicitly configured with `--env.CK_OPTIMIZE_GRAPH`
+Default option is `False`, can be explicitly configured with `--env.CK_OPTIMIZE_GRAPH`. We recommended it to be set as `False` when running the accuracy mode, and `True` when running the performance mode.
 
 ```
 time docker run -it --rm ${CK_IMAGE} \
@@ -238,7 +241,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --dep_add_tags.inference-engine-backend=default-cpu\
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -253,7 +256,7 @@ Avalibale Inference_Engine:Inference_Engine_Backend pairs : `tensorflow:default-
 | `-cpu` | `-gpu` |
 | --- | ---|
 |`--env.CUDA_VISIBLE_DEVICES=-1` | `--env.CUDA_VISIBLE_DEVICES=n` |
-where `n=0,1,2,...` depending on the number of GPU avaliable. 
+where `n=0,1,2,...` depending on which GPU to be used. 
 
 #### Example `tensorflow:default-cpu`:
 ```
@@ -266,7 +269,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -282,7 +285,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_LOADGEN_REF_PROFILE=tf_yolo \
+  --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -298,7 +301,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=rcnn-inception-v2-coco \
-  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -318,7 +321,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=rcnn-inception-v2-coco \
-  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -333,7 +336,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   --dep_add_tags.weights=rcnn-inception-v2-coco \
-  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
