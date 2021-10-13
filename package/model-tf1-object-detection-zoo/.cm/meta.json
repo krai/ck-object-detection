@@ -49,10 +49,6 @@
     "tensorflow",
     "tf1-zoo"
   ],
-  "use_scripts_from_another_entry": {
-    "data_uoa": "c412930408fb8271",
-    "module_uoa": "script"
-  },
   "variations": {
     "rcnn-nas-lowproposals-coco": {
       "extra_env": {
