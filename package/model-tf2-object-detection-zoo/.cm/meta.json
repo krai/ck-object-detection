@@ -20,18 +20,20 @@
       "*PACKAGE_NAME": "$<<MODEL_PACKAGE_NAME>>$",
       "*PACKAGE_NAME1": "$<<MODEL_PACKAGE_NAME1>>$",
       "*PACKAGE_URL": "$<<MODEL_PACKAGE_URL>>$",
-      "FROZEN_GRAPH": "saved_model/saved_model.pb",
+      "FROZEN_GRAPH": "saved_model.pb",
+      "FROZEN_GRAPH1": "saved_model",
       "PACKAGE_UNTAR": "YES",
       "PACKAGE_UNZIP": "YES",
       "PIPELINE_CONFIG": "pipeline.config",
-      "WEIGHTS_FILE": "checkpoint/ckpt-0.index"
+      "WEIGHTS_FILE": "ckpt-0.index",
+      "WEIGHTS_FILE1": "checkpoint"
     },
     "no_os_in_suggested_path": "yes",
     "no_ver_in_suggested_path": "yes",
     "version": "reference"
   },
   "end_full_path": {
-    "linux": "saved_model.pb"
+    "linux": "saved_model/saved_model.pb"
   },
   "only_for_host_os_tags": [
     "linux"
@@ -49,10 +51,6 @@
     "tensorflow",
     "tf2-zoo"
   ],
-  "use_scripts_from_another_entry": {
-    "data_uoa": "c412930408fb8271",
-    "module_uoa": "script"
-  },
   "variations": {
     "ssd_resnet50_v1_fpn_640x640" :{
       "extra_env": {
