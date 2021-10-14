@@ -148,7 +148,7 @@
     "CK_LOADGEN_SCENARIO": "SingleStream",
     "CK_INFERENCE_ENGINE": "tensorflow",
     "CK_INFERENCE_ENGINE_BACKEND": "default-gpu",
-    "CK_LOADGEN_MODE": "--accuracy",
+    "CK_LOADGEN_MODE": "",
     "CK_LOADGEN_TENSORRT_BATCH_SIZE": "1",
     "CK_LOADGEN_TENSORRT_PRECISION": "FP32",
     "CK_LOADGEN_TENSORRT_DYNAMIC": "0",
