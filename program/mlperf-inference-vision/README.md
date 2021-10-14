@@ -20,9 +20,7 @@ The table below shows currently supported models, frameworks ("inference engines
 | `yolo-v3-coco`                               | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
 
 
-# Build the environment:
-
-## 1) Docker
+# Build the environment with Docker:
 
 Build the Docker image by running the build script `ck-mlperf/docker/mlperf-inference-vision-with-ck.tensorrt/build.sh`.
 
@@ -86,7 +84,7 @@ docker stop ck
 docker rm ck
 ```
 
-## 2) Locally
+<!-- ## 2) Locally
 
 ### Repositories
 
@@ -133,7 +131,7 @@ $ ck refresh env:{dataset-env-uoa}
 where `dataset-env-uoa` is one of the env identifiers returned by:
 ```bash
 $ ck show env --tags=dataset,coco
-```
+``` -->
 
 ---
 
@@ -194,16 +192,16 @@ The LoadGen mode can be selected by the environment variable `--env.CK_LOADGEN_M
 
 ### Accuracy
 
-For the Accuracy mode, you can specify the number of samples to process e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'`.
+For the Accuracy mode, you can specify the number of samples to process e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 96'`.
 
 ```
-time docker run -it --rm ${CK_IMAGE} \
+time docker run -it --rm ${CK_IMAGE}
 "ck run program:mlperf-inference-vision --cmd_key=direct \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 96' \
   \
-  --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_MODEL_PROFILE=tf_yolo \
+  --dep_add_tags.weights=ssd_mobilenet_v1_coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -213,13 +211,13 @@ time docker run -it --rm ${CK_IMAGE} \
 
 ### Performance
 
-For the performance mode, you should specify the expected QPS e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--qps=30'`. We also recommended to specify `--env.CK_OPTIMIZE_GRAPH='True'`.
+For the performance mode, you should specify the buffer size and the expected QPS e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 256 --qps=30'`. We also recommended to specify `--env.CK_OPTIMIZE_GRAPH='True'`.
 
 Example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--qps 30' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 256 --qps 30' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --dep_add_tags.weights=yolo-v3-coco \
@@ -245,16 +243,52 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_LOADGEN_SCENARIO=[SCENARIO] \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_MODEL_PROFILE=tf_yolo \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 96' \
+  --dep_add_tags.weights=ssd_mobilenet_v1_coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu\
+  --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   --skip_print_timers"
 ```
 
-## 4) Whether to use `optimize_for_inference` lib to optimize the graph
+### Batch Size in Offline Mode
+Batch size was default as 1. Moreover, you can experiment with `CK_BATCH_SIZE` in `Offline` scenario:
+
+Using batch size of 32 under `Accuracy` mode and `Offline` scenario:
+```
+time docker run -it --rm ${CK_IMAGE}
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+  --env.CK_BATCH_SIZE=32 \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 96' \
+  --env.CK_LOADGEN_SCENARIO=Offline \
+  \
+  --dep_add_tags.weights=ssd_mobilenet_v1_coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
+  --env.CUDA_VISIBLE_DEVICES=-1 \
+  --skip_print_timers"
+```
+Using batch size of 32 under `Performance` mode and `Offline` scenario:
+```
+time docker run -it --rm ${CK_IMAGE}
+"ck run program:mlperf-inference-vision --cmd_key=direct \
+--env.CK_BATCH_SIZE=32 \
+--env.CK_LOADGEN_EXTRA_PARAMS='--count 256 --qps 4' \
+--env.CK_LOADGEN_SCENARIO=Offline \
+\
+--dep_add_tags.weights=ssd_mobilenet_v1_coco \
+--env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
+--env.CK_INFERENCE_ENGINE=tensorflow \
+--env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
+--env.CUDA_VISIBLE_DEVICES=-1 \
+--skip_print_timers"
+```
+
+
+## 4) Graph Optimization
 
 Use the environment variable `--env.CK_OPTIMIZE_GRAPH` to configure whether to optimize the model graph for execution (default: `False`).
 
