@@ -220,8 +220,8 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 256 --qps 30' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
-  --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_MODEL_PROFILE=tf_yolo \
+  --dep_add_tags.weights=ssd_mobilenet_v1_coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
