@@ -350,8 +350,8 @@ time docker run -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_MODEL_PROFILE=tf_yolo \
+  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
@@ -366,8 +366,8 @@ time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=yolo-v3-coco \
-  --env.CK_MODEL_PROFILE=tf_yolo \
+  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --skip_print_timers"
 ```
