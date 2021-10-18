@@ -31,7 +31,9 @@
 
         "fine_grain_timer_file": "tmp-ck-timer.json",
         "post_process_via_ck": {
-          "script_name": "postprocess"
+          "data_uoa": "object-detection",
+          "module_uoa": "script",
+          "script_name": "loadgen_postprocess"
         }
       }
     }
