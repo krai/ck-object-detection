@@ -20,9 +20,9 @@ The table below shows currently supported models, frameworks ("inference engines
 | `yolo-v3-coco`                               | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
 
 
-# Build the environment with Docker
+# Building the environment with Docker
 
-Build the Docker image:
+## Building the Docker image
 
 ```
 $ export CK_IMAGE_NAME=mlperf-inference-vision-with-ck.tensorrt SDK_VER=21.09-py3 TF_VER=2.6.0
@@ -45,7 +45,9 @@ REPOSITORY                                      TAG                  IMAGE ID   
 krai/mlperf-inference-vision-with-ck.tensorrt   21.09-py3_tf-2.6.0   362d3cd6ddd5   8 minutes ago   16.6GB
 ```
 
-### a) Just run the docker AND execute the intended CK command
+## Using the Docker image
+
+### a) Run the Docker image AND execute a CK command
 
 Following the format below:
 ```
@@ -69,7 +71,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
-### b) To run a custom command and edit the environment
+### b) Edit the environment and run a CK command
 
 #### Create a container called `ck`
 
@@ -325,10 +327,10 @@ time docker run -it --rm ${CK_IMAGE} \
 ### Supported `INFERENCE_ENGINE`/`INFERENCE_ENGINE_BACKEND`/`CUDA_VISIBLE_DEVICES` combinations
 
 | `INFERENCE_ENGINE` | `INFERENCE_ENGINE_BACKEND`  | `CUDA_VISIBLE_DEVICES`       |
-| ------------------ | --------------------------- | ---------------------------- | 
-| `tensorflow`       | `default-cpu`               | `-1`                         | 
-| `tensorflow`       | `default-gpu`               | `<device_id>`                | 
-| `tensorflow`       | `openvino-cpu`              | `-1`                         | 
+| ------------------ | --------------------------- | ---------------------------- |
+| `tensorflow`       | `default-cpu`               | `-1`                         |
+| `tensorflow`       | `default-gpu`               | `<device_id>`                |
+| `tensorflow`       | `openvino-cpu`              | `-1`                         |
 | `tensorflow`       | `openvino-gpu` (not tested) | `-1` (integrated Intel GPU)  |
 | `tensorflow`       | `openvino-gpu` (not tested) | `0` (discreet Intel GPU)     |
 

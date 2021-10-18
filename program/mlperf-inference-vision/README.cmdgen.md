@@ -7,7 +7,7 @@ CmdGen maps high-level CmdGen commands to low-level CK commands.
 A high-level command:
 
 ```
-"ck gen cmdgen:benchmark.mlperf-inference-vision \
+"ck gen cmdgen:benchmark.mlperf-inference-vision --sut=chai \
   --scenario=offline --mode=accuracy --dataset_size=50 \
   --model=yolo-v3-coco --library=tensorflow-v2.6.0-cpu"
 ```
@@ -29,6 +29,56 @@ time docker run -it --rm ${CK_IMAGE} \
     --env.CUDA_VISIBLE_DEVICES=-1 \
     \
     --skip_print_timers"
+```
+
+## Save experimental results into a host directory
+
+The user should belong to the group `krai` on the host machine.
+If it does not exist:
+
+```
+sudo groupadd krai
+sudo usermod -aG krai $USER
+```
+
+### Create a new repository
+
+```
+ck add repo:ck-object-detection.$(hostname).$(id -un) --quiet && \
+ck add ck-object-detection.$(hostname).$(id -un):experiment:dummy --common_func && \
+ck rm  ck-object-detection.$(hostname).$(id -un):experiment:dummy --force
+```
+
+### Make its `experiment` directory writable by group `krai`
+
+```
+export CK_EXPERIMENTS="$HOME/CK/ck-object-detection.$(hostname).$(id -un)/experiment"
+sudo chgrp krai $CK_EXPERIMENTS -R && chmod g+ws $CK_EXPERIMENTS -R
+```
+
+### Run
+
+```
+export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.09-py3_tf-2.6.0"
+```
+
+#### Run a CmdGen command from a Docker command
+
+```
+docker run --user=krai:kraig --group-add $(cut -d: -f3 < <(getent group krai)) \
+--volume ${CK_EXPERIMENTS}:/home/krai/CK_REPOS/local/experiment --rm ${CK_IMAGE} \
+"ck run cmdgen:benchmark.mlperf-inference-vision \
+--scenario=offline --mode=accuracy --dataset_size=50 --buffer_size=64 \
+--model=yolo-v3-coco --library=tensorflow-v2.6.0-cpu --sut=chai"
+```
+
+#### Run a Docker command from a CmdGen command [work-in-progress]
+
+```
+ck run cmdgen:benchmark.mlperf-inference-vision \
+--docker --docker_image=${CK_IMAGE} --experiments-dir=${CK_EXPERIMENTS} \
+--scenario=offline --mode=accuracy --dataset_size=50 --buffer_size=64 \
+--model=yolo-v3-coco --library=tensorflow-v2.6.0-cpu --sut=chai
 ```
 
 ---
