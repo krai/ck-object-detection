@@ -56,16 +56,17 @@ time docker run -it --rm ${CK_IMAGE} \
 Example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=yolo-v3-coco \
+  \
   --env.CK_MODEL_PROFILE=tf_yolo \
+  --dep_add_tags.weights=yolo-v3-coco \
+  \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
-  --env.CUDA_VISIBLE_DEVICES=-1 \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
 ### b) To run a custom command and edit the environment
@@ -154,7 +155,7 @@ $ ck show env --tags=dataset,coco
 ## 0) General Form:
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   # Model_Specifications
   --dep_add_tags.weights=[MODEL_NAME] \
   --env.CK_MODEL_PROFILE=[MODEL_PROFILE] \
@@ -171,10 +172,7 @@ time docker run -it --rm ${CK_IMAGE} \
 
   # Mode_Specifications
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-
-  # Others
-  --skip_print_timers"
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50'"
 ```
 
 
@@ -211,7 +209,7 @@ For the Accuracy mode, you can specify the number of samples to process e.g. `--
 
 ```
 time docker run -it --rm ${CK_IMAGE}
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 96' \
   \
@@ -220,8 +218,7 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --env.CK_LOADGEN_SCENARIO=SingleStream"
 ```
 
 ### Performance
@@ -231,7 +228,7 @@ For the performance mode, you should specify the buffer size and the expected QP
 Example:
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 256 --qps 30' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
@@ -240,8 +237,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --env.CK_LOADGEN_SCENARIO=SingleStream"
 ```
 
 ## 3) Specify a Scenario
@@ -254,7 +250,7 @@ You can specify the scenario with the `--env.CK_LOADGEN_SCENARIO` environment va
 
 ```
 time docker run -it --rm ${CK_IMAGE}
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_SCENARIO=[SCENARIO] \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
@@ -263,17 +259,17 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
-  --env.CUDA_VISIBLE_DEVICES=-1 \
-  --skip_print_timers"
+  --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
 ### Batch Size in Offline Mode
-Batch size was default as 1. Moreover, you can experiment with `CK_BATCH_SIZE` in `Offline` scenario:
 
-Using batch size of 32 under `Accuracy` mode and `Offline` scenario:
+The batch size is 1 by default. You can experiment with `CK_BATCH_SIZE` in the `Offline` scenario:
+
+Using the batch size of 32 under the `Accuracy` mode and `Offline` scenario:
 ```
 time docker run -it --rm ${CK_IMAGE}
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_BATCH_SIZE=32 \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 96' \
@@ -283,13 +279,13 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
-  --env.CUDA_VISIBLE_DEVICES=-1 \
-  --skip_print_timers"
+  --env.CUDA_VISIBLE_DEVICES=-1"
 ```
-Using batch size of 32 under `Performance` mode and `Offline` scenario:
+
+Using the batch size of 32 under the `Performance` mode and `Offline` scenario:
 ```
 time docker run -it --rm ${CK_IMAGE}
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
 --env.CK_BATCH_SIZE=32 \
 --env.CK_LOADGEN_EXTRA_PARAMS='--count 256 --qps 4' \
 --env.CK_LOADGEN_SCENARIO=Offline \
@@ -298,8 +294,7 @@ time docker run -it --rm ${CK_IMAGE}
 --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
 --env.CK_INFERENCE_ENGINE=tensorflow \
 --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
---env.CUDA_VISIBLE_DEVICES=-1 \
---skip_print_timers"
+--env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
 
@@ -311,7 +306,7 @@ We recommended it to be set to `False` when running in the Accuracy mode, and to
 
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
@@ -319,10 +314,9 @@ time docker run -it --rm ${CK_IMAGE} \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
-  --dep_add_tags.inference-engine-backend=default-cpu\
+  --dep_add_tags.inference-engine-backend=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --env.CK_LOADGEN_SCENARIO=SingleStream"
 ```
 
 
@@ -343,50 +337,50 @@ time docker run -it --rm ${CK_IMAGE} \
 #### `tensorflow/default-cpu/-1`
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --dep_add_tags.weights=rcnn-inception-v2-coco"
 ```
 
 #### `tensorflow/default-gpu/0`
 ```
 time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-gpu \
   --env.CUDA_VISIBLE_DEVICES=0 \
   \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --dep_add_tags.weights=rcnn-inception-v2-coco"
 ```
 
 #### `tensorflow/openvino-cpu/-1`
 
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=openvino-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --dep_add_tags.weights=rcnn-inception-v2-coco"
 ```
 
 #### `tensorflow/openvino-gpu/-1` (not tested)
@@ -394,17 +388,17 @@ time docker run -it --rm ${CK_IMAGE} \
 If the machine has an Intel chip with an integrated GPU, set `--env.CUDA_VISIBLE_DEVICES=-1`:
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=openvino-gpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
   \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --dep_add_tags.weights=rcnn-inception-v2-coco"
 ```
 
 #### `tensorflow/openvino-gpu/0` (not tested)
@@ -412,15 +406,15 @@ time docker run -it --rm ${CK_IMAGE} \
 If the machine has a discreet Intel GPU, set `--env.CUDA_VISIBLE_DEVICES=0`:
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=openvino-gpu \
   --env.CUDA_VISIBLE_DEVICES=0 \
   \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
-  --dep_add_tags.weights=rcnn-inception-v2-coco \
+  \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
-  --env.CK_LOADGEN_SCENARIO=SingleStream \
-  --skip_print_timers"
+  --dep_add_tags.weights=rcnn-inception-v2-coco"
 ```
