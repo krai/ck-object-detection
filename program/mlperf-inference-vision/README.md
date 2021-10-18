@@ -20,14 +20,29 @@ The table below shows currently supported models, frameworks ("inference engines
 | `yolo-v3-coco`                               | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
 
 
-# Build the environment with Docker:
+# Build the environment with Docker
 
-Build the Docker image by running the build script `ck-mlperf/docker/mlperf-inference-vision-with-ck.tensorrt/build.sh`.
-
-Also, set the image name:
+Build the Docker image:
 
 ```
-export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.08-py3_tf-2.6.0"
+$ export CK_IMAGE_NAME=mlperf-inference-vision-with-ck.tensorrt SDK_VER=21.09-py3 TF_VER=2.6.0
+$ $(ck find docker:${CK_IMAGE_NAME})/build.sh
+...
+Successfully built 362d3cd6ddd5
+Successfully tagged krai/mlperf-inference-vision-with-ck.tensorrt:21.09-py3_tf-2.6.0
+
+real    0m0.099s
+user    0m0.024s
+sys     0m0.005s
+```
+
+Set an environment variable for the built image and validate:
+
+```
+$ export CK_IMAGE="krai/${CK_IMAGE_NAME}:${SDK_VER}_tf-${TF_VER}"
+$ docker image ls ${CK_IMAGE}
+REPOSITORY                                      TAG                  IMAGE ID       CREATED         SIZE
+krai/mlperf-inference-vision-with-ck.tensorrt   21.09-py3_tf-2.6.0   362d3cd6ddd5   8 minutes ago   16.6GB
 ```
 
 ### a) Just run the docker AND execute the intended CK command
