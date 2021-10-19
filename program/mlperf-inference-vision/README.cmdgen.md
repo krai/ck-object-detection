@@ -16,7 +16,7 @@ gets mapped to:
 
 ```
 time docker run -it --rm ${CK_IMAGE} \
-"ck run program:mlperf-inference-vision --cmd_key=direct \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
     --env.CK_LOADGEN_SCENARIO=Offline \
     --env.CK_LOADGEN_MODE='--accuracy' \
     --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
@@ -26,9 +26,7 @@ time docker run -it --rm ${CK_IMAGE} \
     \
     --env.CK_INFERENCE_ENGINE=tensorflow \
     --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu\
-    --env.CUDA_VISIBLE_DEVICES=-1 \
-    \
-    --skip_print_timers"
+    --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
 ## Save experimental results into a host directory
@@ -115,7 +113,7 @@ It will affect the following flags in the CK environment:
 
 | Accuracy Mode | Performance Mode |
 | --- | ---|
-|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 50'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--qps 30'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
+|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
 
 ---
 ---
