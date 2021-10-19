@@ -207,13 +207,13 @@ The LoadGen mode can be selected by the environment variable `--env.CK_LOADGEN_M
 
 ### Accuracy
 
-For the Accuracy mode, you should specify the dataset size e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200'`.
+For the Accuracy mode, you should specify the dataset size and the number of queries e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200'`.
 
 ```
 time docker run -it --rm ${CK_IMAGE}
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
@@ -255,7 +255,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=[SCENARIO] \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
@@ -273,7 +273,7 @@ time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_BATCH_SIZE=32 \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -308,7 +308,7 @@ time docker run -it --rm ${CK_IMAGE} \
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -336,7 +336,7 @@ time docker run -it --rm ${CK_IMAGE} \
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -365,7 +365,7 @@ time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_BATCH_SIZE=32 \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \

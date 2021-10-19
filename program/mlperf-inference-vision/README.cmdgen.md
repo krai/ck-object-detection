@@ -113,7 +113,7 @@ It will affect the following flags in the CK environment:
 
 | Accuracy Mode | Performance Mode |
 | --- | ---|
-|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
+|`--env.CK_LOADGEN_MODE='--accuracy'` <br> `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200'` | `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3'` <br> `--env.CK_OPTIMIZE_GRAPH='True'`|
 
 ---
 ---
