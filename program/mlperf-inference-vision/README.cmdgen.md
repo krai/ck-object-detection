@@ -50,31 +50,31 @@ ck rm  ck-object-detection.$(hostname).$(id -un):experiment:dummy --force
 ### Make its `experiment` directory writable by group `krai`
 
 ```
-export CK_EXPERIMENTS="$HOME/CK/ck-object-detection.$(hostname).$(id -un)/experiment"
-sudo chgrp krai $CK_EXPERIMENTS -R && chmod g+ws $CK_EXPERIMENTS -R
+export CK_EXPERIMENT_DIR="$HOME/CK/ck-object-detection.$(hostname).$(id -un)/experiment"
+sudo chgrp krai $CK_EXPERIMENT_DIR -R && sudo chmod g+w $CK_EXPERIMENT_DIR -R
 ```
 
 ### Run
 
-```
-export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.09-py3_tf-2.6.0"
-```
-
 #### Run a CmdGen command from a Docker command
 
 ```
+export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.09-py3_tf-2.6.0"
+export CK_EXPERIMENT_DIR="$HOME/CK/ck-object-detection.$(hostname).$(id -un)/experiment"
 docker run --user=krai:kraig --group-add $(cut -d: -f3 < <(getent group krai)) \
---volume ${CK_EXPERIMENTS}:/home/krai/CK_REPOS/local/experiment --rm ${CK_IMAGE} \
-"ck run cmdgen:benchmark.mlperf-inference-vision \
+--volume ${CK_EXPERIMENT_DIR}:/home/krai/CK_REPOS/local/experiment --rm ${CK_IMAGE} \
+"ck run cmdgen:benchmark.mlperf-inference-vision --verbose \
 --scenario=offline --mode=accuracy --dataset_size=50 --buffer_size=64 \
 --model=yolo-v3-coco --library=tensorflow-v2.6.0-cpu --sut=chai"
 ```
 
-#### Run a Docker command from a CmdGen command [work-in-progress]
+#### Run a Docker command from a CmdGen command
 
 ```
-ck run cmdgen:benchmark.mlperf-inference-vision \
---docker --docker_image=${CK_IMAGE} --experiments-dir=${CK_EXPERIMENTS} \
+export CK_IMAGE="krai/mlperf-inference-vision-with-ck.tensorrt:21.09-py3_tf-2.6.0"
+export CK_EXPERIMENT_DIR="$HOME/CK/ck-object-detection.$(hostname).$(id -un)/experiment"
+ck run cmdgen:benchmark.mlperf-inference-vision --verbose \
+--docker --docker_image=${CK_IMAGE} --experiment_dir=${CK_EXPERIMENT_DIR} \
 --scenario=offline --mode=accuracy --dataset_size=50 --buffer_size=64 \
 --model=yolo-v3-coco --library=tensorflow-v2.6.0-cpu --sut=chai
 ```
