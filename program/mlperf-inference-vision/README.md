@@ -205,9 +205,9 @@ Specify both `--dep_add_tags.weights=[MODEL_NAME]` and `--env.CK_MODEL_PROFILE=[
 
 The LoadGen mode can be selected by the environment variable `--env.CK_LOADGEN_MODE`. (When the mode is specified, it is `AccuracyOnly`; otherwise, it is `PerformanceOnly`.)
 
-### Accuracy
+## Accuracy
 
-For the Accuracy mode, you should specify the dataset size and the number of queries e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200'`.
+For the Accuracy mode, you should specify the dataset size and the maximum number of queries e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200'`.
 
 ```
 time docker run -it --rm ${CK_IMAGE}
@@ -223,22 +223,38 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_LOADGEN_SCENARIO=SingleStream"
 ```
 
-### Performance
+## Performance
 
-For the Performance mode, you should specify the dataset size, buffer size and the expected QPS e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3'`. We also recommended to specify `--env.CK_OPTIMIZE_GRAPH='True'`.
+For the Performance mode, we recommended to specify `--env.CK_OPTIMIZE_GRAPH='True'`. You should also specify the dataset size, buffer size and the target QPS/ the target latency 
 
+For `Offline` scenario, use target QPS to control how many queries Loadgen would generate:
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3' \
+  --env.CK_LOADGEN_SCENARIO=Offline \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
-  --env.CUDA_VISIBLE_DEVICES=-1 \
-  --env.CK_LOADGEN_SCENARIO=SingleStream"
+  --env.CUDA_VISIBLE_DEVICES=-1"
+```
+
+For `SingleStream` scenario, use target latency to control how many queries Loadgen would generate (unit of latency is in seconds):
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --max-latency 0.33' \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CK_OPTIMIZE_GRAPH='True' \
+  \
+  --dep_add_tags.weights=ssd_mobilenet_v1_coco \
+  --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
+  --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
 ## 3) Specify a Scenario
@@ -263,7 +279,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
-### Batch Size in Offline Mode
+## Batch Size in Offline Mode
 
 The batch size is 1 by default. You can experiment with `CK_BATCH_SIZE` in the `Offline` scenario:
 
@@ -298,6 +314,15 @@ time docker run -it --rm ${CK_IMAGE} \
 --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
 --env.CUDA_VISIBLE_DEVICES=-1"
 ```
+
+## 4) Summary of Scenario and Mode combinations
+
+|SCENARIO| MODE | CK_LOADGEN_EXTRA_PARAMS | CK_BATCH_SIZE |
+|---|--- |--- |--- |
+| `SingleStream`| Accuracy | `--count 200 --max-query-count 200` | / |
+| `SingleStream`| Performance | `--count 200 --performance-sample-count 200 --max-latency 0.33` | / |
+| `Offline` | Accuracy | `--count 200 --max-query-count 200` | can set |
+| `Offline` | Performance | `--count 200 --performance-sample-count 200 --qps 3` | can set |
 
 ### Examples
 <details>
@@ -349,7 +374,7 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --max-latency 0.33' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   \
@@ -392,7 +417,7 @@ time docker run -it --rm ${CK_IMAGE} \
 </details>
 <br>
 
-## 4) Graph Optimization
+## 5) Graph Optimization
 
 Use the environment variable `--env.CK_OPTIMIZE_GRAPH` to configure whether to optimize the model graph for execution (default: `False`).
 
@@ -414,7 +439,7 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 
 
-## 5) Select an Engine/Backend/Device
+## 6) Select an Engine/Backend/Device
 
 ### Supported `INFERENCE_ENGINE`/`INFERENCE_ENGINE_BACKEND`/`CUDA_VISIBLE_DEVICES` combinations
 
