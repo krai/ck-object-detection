@@ -207,13 +207,13 @@ The LoadGen mode can be selected by the environment variable `--env.CK_LOADGEN_M
 
 ## Accuracy
 
-For the Accuracy mode, you should specify the dataset size and the maximum number of queries e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200'`.
+For the Accuracy mode, you should specify the dataset size and the number of queries e.g. `--env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --query-count 200'`.
 
 ```
 time docker run -it --rm ${CK_IMAGE}
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
@@ -231,7 +231,7 @@ For `Offline` scenario, use target QPS to control how many queries Loadgen would
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50 --performance-sample-count 64 --query-count 2048 --target-latency 35' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
@@ -242,11 +242,11 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CUDA_VISIBLE_DEVICES=-1"
 ```
 
-For `SingleStream` scenario, use target latency to control how many queries Loadgen would generate (unit of latency is in seconds):
+For `SingleStream` scenario, use target latency to control how many queries Loadgen would generate (unit of latency is in milliseconds):
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --max-latency 0.33' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50 --performance-sample-count 64 --query-count 2048 --target-latency 35' \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
@@ -271,7 +271,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=[SCENARIO] \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
@@ -289,7 +289,7 @@ time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_BATCH_SIZE=32 \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -304,7 +304,7 @@ Using the batch size of 32 under the `Performance` mode and `Offline` scenario:
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
 --env.CK_BATCH_SIZE=32 \
---env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3' \
+--env.CK_LOADGEN_EXTRA_PARAMS='--count 50 --performance-sample-count 64 --query-count 2048 --qps 3' \
 --env.CK_OPTIMIZE_GRAPH='True' \
 --env.CK_LOADGEN_SCENARIO=Offline \
 \
@@ -319,10 +319,10 @@ time docker run -it --rm ${CK_IMAGE} \
 
 |SCENARIO| MODE | CK_LOADGEN_EXTRA_PARAMS | CK_BATCH_SIZE |
 |---|--- |--- |--- |
-| `SingleStream`| Accuracy | `--count 200 --max-query-count 200` | / |
-| `SingleStream`| Performance | `--count 200 --performance-sample-count 200 --max-latency 0.33` | / |
-| `Offline` | Accuracy | `--count 200 --max-query-count 200` | can set |
-| `Offline` | Performance | `--count 200 --performance-sample-count 200 --qps 3` | can set |
+| `SingleStream`| Accuracy | `--count 5000 --performance-sample-count 500` | / |
+| `SingleStream`| Performance | `--count 50 --performance-sample-count 64 --query-count 2048 --target-latency 35` | / |
+| `Offline` | Accuracy | `--count 5000 --performance-sample-count 500` | avaliable |
+| `Offline` | Performance | `--count 50 --performance-sample-count 64 --query-count 2048 --qps 3` | avaliable |
 
 ### Examples
 <details>
@@ -333,7 +333,7 @@ time docker run -it --rm ${CK_IMAGE} \
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -346,7 +346,7 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50 --performance-sample-count 64 --query-count 2048 --qps 3' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
@@ -361,7 +361,7 @@ time docker run -it --rm ${CK_IMAGE} \
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -374,7 +374,7 @@ time docker run -it --rm ${CK_IMAGE} \
 ```
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --max-latency 0.33' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50 --performance-sample-count 64 --query-count 2048 --target-latency 35' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   \
@@ -390,7 +390,7 @@ time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_BATCH_SIZE=32 \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --max-query-count 200' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=ssd_mobilenet_v1_coco \
@@ -404,7 +404,7 @@ time docker run -it --rm ${CK_IMAGE} \
 time docker run -it --rm ${CK_IMAGE} \
 "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
   --env.CK_BATCH_SIZE=32 \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 200 --performance-sample-count 200 --qps 3' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50 --performance-sample-count 64 --query-count 2048 --qps 3' \
   --env.CK_OPTIMIZE_GRAPH='True' \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
@@ -429,7 +429,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
@@ -465,7 +465,7 @@ time docker run -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --dep_add_tags.weights=rcnn-inception-v2-coco"
@@ -481,7 +481,7 @@ time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --dep_add_tags.weights=rcnn-inception-v2-coco"
@@ -498,7 +498,7 @@ time docker run -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --dep_add_tags.weights=rcnn-inception-v2-coco"
@@ -516,7 +516,7 @@ time docker run -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --dep_add_tags.weights=rcnn-inception-v2-coco"
@@ -534,7 +534,7 @@ time docker run -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   --env.CK_LOADGEN_MODE='--accuracy' \
-  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --env.CK_MODEL_PROFILE=default_tf_object_det_zoo \
   --dep_add_tags.weights=rcnn-inception-v2-coco"
