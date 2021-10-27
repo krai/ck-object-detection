@@ -21,12 +21,9 @@
       "*PACKAGE_NAME1": "$<<MODEL_PACKAGE_NAME1>>$",
       "*PACKAGE_URL": "$<<MODEL_PACKAGE_URL>>$",
       "FROZEN_GRAPH": "saved_model.pb",
-      "FROZEN_GRAPH1": "saved_model",
       "PACKAGE_UNTAR": "YES",
       "PACKAGE_UNZIP": "YES",
-      "PIPELINE_CONFIG": "pipeline.config",
-      "WEIGHTS_FILE": "ckpt-0.index",
-      "WEIGHTS_FILE1": "checkpoint"
+      "PIPELINE_CONFIG": "pipeline.config"
     },
     "no_os_in_suggested_path": "yes",
     "no_ver_in_suggested_path": "yes",
@@ -79,7 +76,7 @@
         "MODEL_MODEL_NAME": "SSD Resnet50 V1 FPN 1024x1024",
         "MODEL_PACKAGE_NAME": "ssd_resnet50_v1_fpn_1024x1024_coco17_tpu-8.tar.gz",
         "MODEL_PACKAGE_NAME1": "ssd_resnet50_v1_fpn_1024x1024_coco17_tpu-8",
-        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection/tf2/20200711/"
+        "MODEL_PACKAGE_URL": "http://download.tensorflow.org/models/object_detection/tf2/20200711"
       }
     }
   }

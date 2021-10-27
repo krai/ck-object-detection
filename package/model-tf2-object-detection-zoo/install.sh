@@ -12,11 +12,11 @@ if [ ${PACKAGE_UNZIP} == "YES" ] && [ ${PACKAGE_UNTAR} == "YES" ]; then
 echo
 echo "Unpack weights file ${PACKAGE_NAME} ..."
 tar -zxvf ${PACKAGE_NAME}
-mkdir ../${FROZEN_GRAPH1}
-mv ${PACKAGE_NAME1}/${FROZEN_GRAPH1}/${FROZEN_GRAPH} ../${FROZEN_GRAPH1}/${FROZEN_GRAPH}
-mkdir ../${WEIGHTS_FILE1}
-mv ${PACKAGE_NAME1}/${WEIGHTS_FILE1}/* ../${WEIGHTS_FILE1}/
-mv ${PACKAGE_NAME1}/${PIPELINE_CONFIG} ..
+mkdir ../checkpoint/
+cp -R ${PACKAGE_NAME1}/checkpoint/* ../checkpoint/
+mkdir ../saved_model/
+cp -R ${PACKAGE_NAME1}/saved_model/* ../saved_model/
+cp -i ${PACKAGE_NAME1}/${PIPELINE_CONFIG} ../${PIPELINE_CONFIG}
 fi
 
 #####################################################################
