@@ -86,7 +86,7 @@
     "lib-tensorflow": {
       "enable_if_env": [
         { 
-          "CK_INFERENCE_ENGINE": ["tensorflow"],
+          "CK_INFERENCE_ENGINE": ["tensorflow","tensorflow2"],
           "CK_INFERENCE_ENGINE_BACKEND": ["default-cpu","default-gpu"]
         }
       ],
@@ -99,7 +99,7 @@
     "lib-tensorflow-openvino": {
       "enable_if_env": [
         {
-          "CK_INFERENCE_ENGINE": ["tensorflow"],
+          "CK_INFERENCE_ENGINE": ["tensorflow","tensorflow2"],
           "CK_INFERENCE_ENGINE_BACKEND": ["openvino-cpu","openvino-gpu"]
         }
       ],
@@ -125,7 +125,7 @@
       "local": "yes",
       "name": "TensorFlow Object Detection model",
       "sort": 30,
-      "tags": "model,tf,object-detection,tf1-zoo"
+      "tags": "model,tf,object-detection"
     }
   },
   "run_vars": {
