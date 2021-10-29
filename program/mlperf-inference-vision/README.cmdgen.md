@@ -21,7 +21,7 @@ time docker run -it --rm ${CK_IMAGE} \
     --env.CK_LOADGEN_MODE='--accuracy' \
     --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
     \
-    --dep_add_tags.weights=yolo-v3-coco \
+    --dep_add_tags.weights=tf1-zoo,yolo-v3-coco \
     --env.CK_MODEL_PROFILE=tf_yolo \
     \
     --env.CK_INFERENCE_ENGINE=tensorflow \
@@ -129,20 +129,7 @@ It will affect the following flags in the ck environment:
 --env.CUDA_VISIBLE_DEVICES=[DEVICE_NUMBER] (will be discussed in the next section)
 ```
 
-| MODEL_NAME | MODEL_PROFILE |
-| --- | --- | 
-|`rcnn-nas-lowproposals-coco`|`default_tf_object_det_zoo`| 
-|`rcnn-resnet50-lowproposals-coco`| `default_tf_object_det_zoo`|  
-|`rcnn-resnet101-lowproposals-coco`| `default_tf_object_det_zoo`| 
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `default_tf_object_det_zoo`| 
-|`rcnn-inception-v2-coco`|`default_tf_object_det_zoo`| 
-|`ssd-inception-v2-coco`|`default_tf_object_det_zoo`|
-|`ssd_mobilenet_v1_coco`|`default_tf_object_det_zoo`| 
-|`ssd_mobilenet_v1_quantized_coco`|`default_tf_object_det_zoo`| 
-|`ssd-mobilenet-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| 
-|`ssd-resnet50-v1-fpn-sbp-coco`|`default_tf_object_det_zoo`| 
-|`ssdlite-mobilenet-v2-coco`|`default_tf_object_det_zoo`|
-|`yolo-v3-coco`|`tf_yolo`| 
+See README.md for the table.
 
 ---
 ---
@@ -159,5 +146,7 @@ It will affect the following flags in the ck environment:
 |---|---|---|
 |`tensorflow` |`default-cpu` |`-1`|
 |`tensorflow` |`default-gpu` |`0`|
+|`tensorflow2` |`default-cpu` |`-1`|
+|`tensorflow2` |`default-gpu` |`0`|
 |`tensorflow` |`openvino-cpu`|`-1`|
 |`tensorflow` |`openvino-gpu` |`-1` for an Intel chip with an integrated GPU; `0` for an Intel GPU|
