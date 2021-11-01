@@ -21,7 +21,7 @@ time docker run -it --rm ${CK_IMAGE} \
     --env.CK_LOADGEN_MODE='--accuracy' \
     --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
     \
-    --dep_add_tags.weights=tf1-zoo,yolo-v3-coco \
+    --dep_add_tags.weights=yolo-v3-coco \
     --env.CK_MODEL_PROFILE=tf_yolo \
     \
     --env.CK_INFERENCE_ENGINE=tensorflow \

@@ -20,6 +20,14 @@ The table below shows currently supported models, frameworks ("inference engines
 | `yolo-v3-coco`                               | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
 | `ssd_resnet50_v1_fpn_640x640`                | `tensorflow`        | `default-cpu`,`default-gpu`                |
 | `ssd_resnet50_v1_fpn_1024x1024`              | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_resnet101_v1_fpn_640x640`                | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_resnet101_v1_fpn_1024x1024`              | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_resnet152_v1_fpn_640x640`                | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_resnet152_v1_fpn_1024x1024`              | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_mobilenet_v2_320x320`                    | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_mobilenet_v1_fpn_640x640`                | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_mobilenet_v2_fpnlite_320x320`            | `tensorflow`        | `default-cpu`,`default-gpu`                |
+|`ssd_mobilenet_v2_fpnlite_640x640`            | `tensorflow`        | `default-cpu`,`default-gpu`                |
 
 
 # Building the environment with Docker
@@ -66,7 +74,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
   \
   --env.CK_MODEL_PROFILE=tf_yolo \
-  --dep_add_tags.weights=tf1-zoo,yolo-v3-coco \
+  --dep_add_tags.weights=yolo-v3-coco \
   \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
@@ -187,8 +195,8 @@ Specify `--dep_add_tags.weights=[TF_ZOO],[MODEL_NAME]` and `--env.CK_MODEL_PROFI
 
 ### Supported `MODEL_NAME`/`MODEL_PROFILE` combinations
 
-| `MODEL_NAME`                               |`TF_ZOO`   |`MODEL_PROFILE`              |
-| ------------------------------------------ | ----------| --------------------------- |
+| `MODEL_NAME`                               |`TF_ZOO`   |`MODEL_PROFILE`      |
+| ------------------------------------------ | ----------| --------------------|
 |`rcnn-nas-lowproposals-coco`                | `tf1-zoo` |`tf1_object_det_zoo` |
 |`rcnn-resnet50-lowproposals-coco`           | `tf1-zoo` |`tf1_object_det_zoo` |
 |`rcnn-resnet101-lowproposals-coco`          | `tf1-zoo` |`tf1_object_det_zoo` |
@@ -200,9 +208,17 @@ Specify `--dep_add_tags.weights=[TF_ZOO],[MODEL_NAME]` and `--env.CK_MODEL_PROFI
 |`ssd-mobilenet-v1-fpn-sbp-coco`             | `tf1-zoo` |`tf1_object_det_zoo` |
 |`ssd-resnet50-v1-fpn-sbp-coco`              | `tf1-zoo` |`tf1_object_det_zoo` |
 |`ssdlite-mobilenet-v2-coco`                 | `tf1-zoo` |`tf1_object_det_zoo` |
-|`yolo-v3-coco`                              | `tf1-zoo` |`tf_yolo`                    |
+|`yolo-v3-coco`                              |           |`tf_yolo`            |
 |`ssd_resnet50_v1_fpn_640x640`               | `tf2-zoo` |`tf2_object_det_zoo` |
 |`ssd_resnet50_v1_fpn_1024x1024`             | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_resnet101_v1_fpn_640x640`              | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_resnet101_v1_fpn_1024x1024`            | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_resnet152_v1_fpn_640x640`              | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_resnet152_v1_fpn_1024x1024`            | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_mobilenet_v2_320x320`                  | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_mobilenet_v1_fpn_640x640`              | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_mobilenet_v2_fpnlite_320x320`          | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_mobilenet_v2_fpnlite_640x640`          | `tf2-zoo` |`tf2_object_det_zoo` |
 
 ### Examples
 <details>
@@ -469,7 +485,7 @@ time docker run -it --rm ${CK_IMAGE} \
   \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
-  --dep_add_tags.weights=tf1-zoo,yolo-v3-coco \
+  --dep_add_tags.weights=yolo-v3-coco \
   --env.CK_MODEL_PROFILE=tf_yolo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --dep_add_tags.inference-engine-backend=default-cpu \
