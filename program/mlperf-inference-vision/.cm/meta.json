@@ -86,7 +86,7 @@
     "lib-tensorflow": {
       "enable_if_env": [
         { 
-          "CK_INFERENCE_ENGINE": ["tensorflow","tensorflow2"],
+          "CK_INFERENCE_ENGINE": ["tensorflow"],
           "CK_INFERENCE_ENGINE_BACKEND": ["default-cpu","default-gpu"]
         }
       ],
@@ -99,7 +99,7 @@
     "lib-tensorflow-openvino": {
       "enable_if_env": [
         {
-          "CK_INFERENCE_ENGINE": ["tensorflow","tensorflow2"],
+          "CK_INFERENCE_ENGINE": ["tensorflow"],
           "CK_INFERENCE_ENGINE_BACKEND": ["openvino-cpu","openvino-gpu"]
         }
       ],
@@ -138,7 +138,7 @@
     "CK_TF_CPU_NUM_OF_PROCESSORS": 0,
     "CK_TF_GPU_MEMORY_PERCENT": 50,
 
-    "CK_MODEL_PROFILE": "default_tf_object_det_zoo",
+    "CK_MODEL_PROFILE": "tf1_object_det_zoo",
     "CK_LOADGEN_SCENARIO": "SingleStream",
     "CK_INFERENCE_ENGINE": "tensorflow",
     "CK_INFERENCE_ENGINE_BACKEND": "default-gpu",

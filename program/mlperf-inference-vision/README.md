@@ -18,8 +18,8 @@ The table below shows currently supported models, frameworks ("inference engines
 | `ssd-resnet50-v1-fpn-sbp-coco`               | `tensorflow`        | `default-cpu`,`default-gpu`                |
 | `ssdlite-mobilenet-v2-coco`                  | `tensorflow`        | `default-cpu`,`default-gpu`                |
 | `yolo-v3-coco`                               | `tensorflow`        | `default-cpu`,`default-gpu`,`openvino-cpu` |
-| `ssd_resnet50_v1_fpn_640x640`                | `tensorflow2`       | `default-cpu`,`default-gpu`                |
-| `ssd_resnet50_v1_fpn_1024x1024`              | `tensorflow2`       | `default-cpu`,`default-gpu`                |
+| `ssd_resnet50_v1_fpn_640x640`                | `tensorflow`        | `default-cpu`,`default-gpu`                |
+| `ssd_resnet50_v1_fpn_1024x1024`              | `tensorflow`        | `default-cpu`,`default-gpu`                |
 
 
 # Building the environment with Docker
@@ -182,28 +182,63 @@ time docker run -it --rm ${CK_IMAGE} \
 
 ## 1) Specify a Model
 
-Specify both `--dep_add_tags.weights=[TF_ZOO],[MODEL_NAME]` and `--env.CK_MODEL_PROFILE=[MODEL_PROFILE]`.
+Specify `--dep_add_tags.weights=[TF_ZOO],[MODEL_NAME]` and `--env.CK_MODEL_PROFILE=[MODEL_PROFILE]`.
 
 
 ### Supported `MODEL_NAME`/`MODEL_PROFILE` combinations
 
 | `MODEL_NAME`                               |`TF_ZOO`   |`MODEL_PROFILE`              |
 | ------------------------------------------ | ----------| --------------------------- |
-|`rcnn-nas-lowproposals-coco`                | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`rcnn-resnet50-lowproposals-coco`           | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`rcnn-resnet101-lowproposals-coco`          | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`rcnn-inception-resnet-v2-lowproposals-coco`| `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`rcnn-inception-v2-coco`                    | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`ssd-inception-v2-coco`                     | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`ssd_mobilenet_v1_coco`                     | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`ssd_mobilenet_v1_quantized_coco`           | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`ssd-mobilenet-v1-fpn-sbp-coco`             | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`ssd-resnet50-v1-fpn-sbp-coco`              | `tf1-zoo` |`default_tf1_object_det_zoo` |
-|`ssdlite-mobilenet-v2-coco`                 | `tf1-zoo` |`default_tf1_object_det_zoo` |
+|`rcnn-nas-lowproposals-coco`                | `tf1-zoo` |`tf1_object_det_zoo` |
+|`rcnn-resnet50-lowproposals-coco`           | `tf1-zoo` |`tf1_object_det_zoo` |
+|`rcnn-resnet101-lowproposals-coco`          | `tf1-zoo` |`tf1_object_det_zoo` |
+|`rcnn-inception-resnet-v2-lowproposals-coco`| `tf1-zoo` |`tf1_object_det_zoo` |
+|`rcnn-inception-v2-coco`                    | `tf1-zoo` |`tf1_object_det_zoo` |
+|`ssd-inception-v2-coco`                     | `tf1-zoo` |`tf1_object_det_zoo` |
+|`ssd_mobilenet_v1_coco`                     | `tf1-zoo` |`tf1_object_det_zoo` |
+|`ssd_mobilenet_v1_quantized_coco`           | `tf1-zoo` |`tf1_object_det_zoo` |
+|`ssd-mobilenet-v1-fpn-sbp-coco`             | `tf1-zoo` |`tf1_object_det_zoo` |
+|`ssd-resnet50-v1-fpn-sbp-coco`              | `tf1-zoo` |`tf1_object_det_zoo` |
+|`ssdlite-mobilenet-v2-coco`                 | `tf1-zoo` |`tf1_object_det_zoo` |
 |`yolo-v3-coco`                              | `tf1-zoo` |`tf_yolo`                    |
-|`ssd_resnet50_v1_fpn_640x640`               | `tf2-zoo` |`default_tf2_object_det_zoo` |
-|`ssd_resnet50_v1_fpn_1024x1024`             | `tf2-zoo` |`default_tf2_object_det_zoo` |
+|`ssd_resnet50_v1_fpn_640x640`               | `tf2-zoo` |`tf2_object_det_zoo` |
+|`ssd_resnet50_v1_fpn_1024x1024`             | `tf2-zoo` |`tf2_object_det_zoo` |
 
+### Examples
+<details>
+<summary>Click to expand</summary>
+
+`tf1-zoo` model
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --dep_add_tags.weights=tf1-zoo,ssdlite-mobilenet-v2-coco \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
+  \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
+  --env.CUDA_VISIBLE_DEVICES=-1"
+```
+
+`tf2-zoo` model
+```
+time docker run -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --dep_add_tags.weights=tf2-zoo,ssd_resnet50_v1_fpn_640x640 \
+  --env.CK_MODEL_PROFILE=tf2_object_det_zoo \
+  \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 50' \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
+  --env.CUDA_VISIBLE_DEVICES=-1"
+```
+</details>
+<br>
 
 ## 2) Specify a Mode
 
@@ -220,7 +255,7 @@ time docker run -it --rm ${CK_IMAGE}
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1 \
@@ -240,7 +275,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -255,7 +290,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_OPTIMIZE_GRAPH='True' \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -277,7 +312,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -297,7 +332,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -313,7 +348,7 @@ time docker run -it --rm ${CK_IMAGE} \
 --env.CK_LOADGEN_SCENARIO=Offline \
 \
 --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
---env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+--env.CK_MODEL_PROFILE=tf1_object_det_zoo \
 --env.CK_INFERENCE_ENGINE=tensorflow \
 --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
 --env.CUDA_VISIBLE_DEVICES=-1"
@@ -341,7 +376,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -355,7 +390,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -369,7 +404,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -383,7 +418,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=SingleStream \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -398,7 +433,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -413,7 +448,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_SCENARIO=Offline \
   \
   --dep_add_tags.weights=tf1-zoo,ssd_mobilenet_v1_coco \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --env.CK_INFERENCE_ENGINE=tensorflow \
   --env.CK_INFERENCE_ENGINE_BACKEND=default-cpu \
   --env.CUDA_VISIBLE_DEVICES=-1"
@@ -451,8 +486,6 @@ time docker run -it --rm ${CK_IMAGE} \
 | ------------------ | --------------------------- | ---------------------------- |
 | `tensorflow`       | `default-cpu`               | `-1`                         |
 | `tensorflow`       | `default-gpu`               | `<device_id>`                |
-| `tensorflow2`      | `default-cpu`               | `-1`                         |
-| `tensorflow2`      | `default-gpu`               | `<device_id>`                |
 | `tensorflow`       | `openvino-cpu`              | `-1`                         |
 | `tensorflow`       | `openvino-gpu` (not tested) | `-1` (integrated Intel GPU)  |
 | `tensorflow`       | `openvino-gpu` (not tested) | `0` (discreet Intel GPU)     |
@@ -473,7 +506,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --dep_add_tags.weights=tf1-zoo,rcnn-inception-v2-coco"
 ```
 
@@ -489,7 +522,7 @@ time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --dep_add_tags.weights=tf1-zoo,rcnn-inception-v2-coco"
 ```
 
@@ -506,7 +539,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --dep_add_tags.weights=tf1-zoo,rcnn-inception-v2-coco"
 ```
 
@@ -524,7 +557,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --dep_add_tags.weights=tf1-zoo,rcnn-inception-v2-coco"
 ```
 
@@ -542,7 +575,7 @@ time docker run -it --rm ${CK_IMAGE} \
   --env.CK_LOADGEN_MODE='--accuracy' \
   --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
   \
-  --env.CK_MODEL_PROFILE=default_tf1_object_det_zoo \
+  --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --dep_add_tags.weights=tf1-zoo,rcnn-inception-v2-coco"
 ```
 </details>

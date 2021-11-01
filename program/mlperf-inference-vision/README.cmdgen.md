@@ -146,7 +146,5 @@ It will affect the following flags in the ck environment:
 |---|---|---|
 |`tensorflow` |`default-cpu` |`-1`|
 |`tensorflow` |`default-gpu` |`0`|
-|`tensorflow2` |`default-cpu` |`-1`|
-|`tensorflow2` |`default-gpu` |`0`|
 |`tensorflow` |`openvino-cpu`|`-1`|
 |`tensorflow` |`openvino-gpu` |`-1` for an Intel chip with an integrated GPU; `0` for an Intel GPU|
