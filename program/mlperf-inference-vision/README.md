@@ -502,6 +502,7 @@ time docker run -it --rm ${CK_IMAGE} \
 | ------------------ | --------------------------- | ---------------------------- |
 | `tensorflow`       | `default-cpu`               | `-1`                         |
 | `tensorflow`       | `default-gpu`               | `<device_id>`                |
+| `tensorflow`       | `tensorrt-dynamic`          | `<device_id>`                |
 | `tensorflow`       | `openvino-cpu`              | `-1`                         |
 | `tensorflow`       | `openvino-gpu` (not tested) | `-1` (integrated Intel GPU)  |
 | `tensorflow`       | `openvino-gpu` (not tested) | `0` (discreet Intel GPU)     |
@@ -540,6 +541,22 @@ time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
   \
   --env.CK_MODEL_PROFILE=tf1_object_det_zoo \
   --dep_add_tags.weights=tf1-zoo,rcnn-inception-v2-coco"
+```
+
+#### `tensorflow/tensorrt-dynamic/0`
+```
+time docker run --runtime=nvidia -it --rm ${CK_IMAGE} \
+"ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_INFERENCE_ENGINE=tensorflow \
+  --env.CK_INFERENCE_ENGINE_BACKEND=tensorrt-dynamic\
+  --env.CUDA_VISIBLE_DEVICES=0 \
+  \
+  --env.CK_LOADGEN_SCENARIO=SingleStream \
+  --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --performance-sample-count 500' \
+  \
+  --env.CK_MODEL_PROFILE=tf2_object_det_zoo \
+  --dep_add_tags.weights=tf2-zoo,ssd_resnet50_v1_fpn_640x640"
 ```
 
 #### `tensorflow/openvino-cpu/-1`
